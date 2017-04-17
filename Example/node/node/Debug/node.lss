@@ -1,0 +1,1556 @@
+
+node.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         0000000c  00800100  000008fa  0000098e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000008fa  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000050  0080010c  0080010c  0000099a  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000099a  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000009cc  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000148  00000000  00000000  00000a08  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   0000159f  00000000  00000000  00000b50  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000404  00000000  00000000  000020ef  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000005fc  00000000  00000000  000024f3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000454  00000000  00000000  00002af0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000074c  00000000  00000000  00002f44  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000100e  00000000  00000000  00003690  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000150  00000000  00000000  0000469e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 46 00 	jmp	0x8c	; 0x8c <__ctors_end>
+   4:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+   8:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+   c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  10:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  14:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  18:	0c 94 ae 03 	jmp	0x75c	; 0x75c <__vector_6>
+  1c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  20:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  24:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  28:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  2c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  30:	0c 94 8c 00 	jmp	0x118	; 0x118 <__vector_12>
+  34:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  38:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  3c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  40:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  44:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  48:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  4c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  50:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  54:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  58:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  5c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  60:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  64:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  68:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  6c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  70:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  74:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  78:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  7c:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  80:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  84:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+  88:	0c 94 63 00 	jmp	0xc6	; 0xc6 <__bad_interrupt>
+
+0000008c <__ctors_end>:
+  8c:	11 24       	eor	r1, r1
+  8e:	1f be       	out	0x3f, r1	; 63
+  90:	cf ef       	ldi	r28, 0xFF	; 255
+  92:	d0 e1       	ldi	r29, 0x10	; 16
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	cd bf       	out	0x3d, r28	; 61
+
+00000098 <__do_copy_data>:
+  98:	11 e0       	ldi	r17, 0x01	; 1
+  9a:	a0 e0       	ldi	r26, 0x00	; 0
+  9c:	b1 e0       	ldi	r27, 0x01	; 1
+  9e:	ea ef       	ldi	r30, 0xFA	; 250
+  a0:	f8 e0       	ldi	r31, 0x08	; 8
+  a2:	02 c0       	rjmp	.+4      	; 0xa8 <__do_copy_data+0x10>
+  a4:	05 90       	lpm	r0, Z+
+  a6:	0d 92       	st	X+, r0
+  a8:	ac 30       	cpi	r26, 0x0C	; 12
+  aa:	b1 07       	cpc	r27, r17
+  ac:	d9 f7       	brne	.-10     	; 0xa4 <__do_copy_data+0xc>
+
+000000ae <__do_clear_bss>:
+  ae:	21 e0       	ldi	r18, 0x01	; 1
+  b0:	ac e0       	ldi	r26, 0x0C	; 12
+  b2:	b1 e0       	ldi	r27, 0x01	; 1
+  b4:	01 c0       	rjmp	.+2      	; 0xb8 <.do_clear_bss_start>
+
+000000b6 <.do_clear_bss_loop>:
+  b6:	1d 92       	st	X+, r1
+
+000000b8 <.do_clear_bss_start>:
+  b8:	ac 35       	cpi	r26, 0x5C	; 92
+  ba:	b2 07       	cpc	r27, r18
+  bc:	e1 f7       	brne	.-8      	; 0xb6 <.do_clear_bss_loop>
+  be:	0e 94 5c 04 	call	0x8b8	; 0x8b8 <main>
+  c2:	0c 94 7b 04 	jmp	0x8f6	; 0x8f6 <_exit>
+
+000000c6 <__bad_interrupt>:
+  c6:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ca <_Z8spi_initv>:
+#define SS 0
+
+void spi_init()
+// Initialize pins for spi communication
+{
+	SPI_DDR &= ~((1<<MOSI)|(1<<MISO)|(1<<SS)|(1<<SCK));
+  ca:	87 b3       	in	r24, 0x17	; 23
+  cc:	80 7f       	andi	r24, 0xF0	; 240
+  ce:	87 bb       	out	0x17, r24	; 23
+	// Define the following pins as output
+	SPI_DDR |= ((1<<MOSI)|(1<<SS)|(1<<SCK));
+  d0:	87 b3       	in	r24, 0x17	; 23
+  d2:	87 60       	ori	r24, 0x07	; 7
+  d4:	87 bb       	out	0x17, r24	; 23
+	(0<<SPIE)|              // SPI Interupt Enable
+	(0<<DORD)|              // Data Order (0:MSB first / 1:LSB first)
+	(1<<MSTR)|              // Master/Slave select
+	(0<<SPR1)|(0<<SPR0)|    // SPI Clock Rate
+	(0<<CPOL)|              // Clock Polarity (0:SCK low / 1:SCK hi when idle)
+	(0<<CPHA));             // Clock Phase (0:leading / 1:trailing edge sampling)
+  d6:	80 e5       	ldi	r24, 0x50	; 80
+  d8:	8d b9       	out	0x0d, r24	; 13
+
+	SPSR = (1<<SPI2X);              // Double Clock Rate
+  da:	81 e0       	ldi	r24, 0x01	; 1
+  dc:	8e b9       	out	0x0e, r24	; 14
+  de:	08 95       	ret
+
+000000e0 <_Z14spi_fast_shifth>:
+}
+
+uint8_t spi_fast_shift (uint8_t data)
+// Clocks only one byte to target device and returns the received one
+{
+	SPDR = data;
+  e0:	8f b9       	out	0x0f, r24	; 15
+	while((SPSR & (1<<SPIF))==0);
+  e2:	77 9b       	sbis	0x0e, 7	; 14
+  e4:	fe cf       	rjmp	.-4      	; 0xe2 <_Z14spi_fast_shifth+0x2>
+	return SPDR;
+  e6:	8f b1       	in	r24, 0x0f	; 15
+  e8:	08 95       	ret
+
+000000ea <_Z11millis_initv>:
+volatile unsigned long timer1_millis;
+
+void millis_init()
+{
+    // CTC mode, Clock/8
+    TCCR1B |= (1 << WGM12) | (1 << CS11);
+  ea:	8e b5       	in	r24, 0x2e	; 46
+  ec:	8a 60       	ori	r24, 0x0A	; 10
+  ee:	8e bd       	out	0x2e, r24	; 46
+    
+    // Load the high byte, then the low byte
+    // into the output compare
+    OCR1AH = (CTC_MATCH_OVERFLOW >> 8);
+  f0:	83 e0       	ldi	r24, 0x03	; 3
+  f2:	8b bd       	out	0x2b, r24	; 43
+    OCR1AL = CTC_MATCH_OVERFLOW;
+  f4:	88 ee       	ldi	r24, 0xE8	; 232
+  f6:	8a bd       	out	0x2a, r24	; 42
+	sei();
+  f8:	78 94       	sei
+	
+    // Enable the compare match interrupt
+    TIMSK |= (1 << OCIE1A);
+  fa:	87 b7       	in	r24, 0x37	; 55
+  fc:	80 61       	ori	r24, 0x10	; 16
+  fe:	87 bf       	out	0x37, r24	; 55
+ 100:	08 95       	ret
+
+00000102 <_Z6millisv>:
+    return 1;
+}
+
+static __inline__ uint8_t __iCliRetVal(void)
+{
+    cli();
+ 102:	f8 94       	cli
+{
+	unsigned long millis_return;
+	// ensure this cannnot be disrupted
+	ATOMIC_BLOCK(ATOMIC_FORCEON)
+	{
+		millis_return = timer1_millis;
+ 104:	60 91 58 01 	lds	r22, 0x0158
+ 108:	70 91 59 01 	lds	r23, 0x0159
+ 10c:	80 91 5a 01 	lds	r24, 0x015A
+ 110:	90 91 5b 01 	lds	r25, 0x015B
+    return 1;
+}
+
+static __inline__ void __iSeiParam(const uint8_t *__s)
+{
+    sei();
+ 114:	78 94       	sei
+	}
+	return millis_return;
+}
+ 116:	08 95       	ret
+
+00000118 <__vector_12>:
+
+ISR (TIMER1_COMPA_vect)
+{
+ 118:	1f 92       	push	r1
+ 11a:	0f 92       	push	r0
+ 11c:	0f b6       	in	r0, 0x3f	; 63
+ 11e:	0f 92       	push	r0
+ 120:	11 24       	eor	r1, r1
+ 122:	8f 93       	push	r24
+ 124:	9f 93       	push	r25
+ 126:	af 93       	push	r26
+ 128:	bf 93       	push	r27
+	timer1_millis++;
+ 12a:	80 91 58 01 	lds	r24, 0x0158
+ 12e:	90 91 59 01 	lds	r25, 0x0159
+ 132:	a0 91 5a 01 	lds	r26, 0x015A
+ 136:	b0 91 5b 01 	lds	r27, 0x015B
+ 13a:	01 96       	adiw	r24, 0x01	; 1
+ 13c:	a1 1d       	adc	r26, r1
+ 13e:	b1 1d       	adc	r27, r1
+ 140:	80 93 58 01 	sts	0x0158, r24
+ 144:	90 93 59 01 	sts	0x0159, r25
+ 148:	a0 93 5a 01 	sts	0x015A, r26
+ 14c:	b0 93 5b 01 	sts	0x015B, r27
+ 150:	bf 91       	pop	r27
+ 152:	af 91       	pop	r26
+ 154:	9f 91       	pop	r25
+ 156:	8f 91       	pop	r24
+ 158:	0f 90       	pop	r0
+ 15a:	0f be       	out	0x3f, r0	; 63
+ 15c:	0f 90       	pop	r0
+ 15e:	1f 90       	pop	r1
+ 160:	18 95       	reti
+
+00000162 <_Z15maybeInterruptsv>:
+}
+
+void maybeInterrupts()
+{
+	// Only reenable interrupts if we're not being called from the ISR
+	if (!inISR) sei();
+ 162:	80 91 0c 01 	lds	r24, 0x010C
+ 166:	81 11       	cpse	r24, r1
+ 168:	01 c0       	rjmp	.+2      	; 0x16c <_Z15maybeInterruptsv+0xa>
+ 16a:	78 94       	sei
+ 16c:	08 95       	ret
+
+0000016e <_Z6selectv>:
+}
+
+void select()
+{
+	SS_PORT &= ~(1<<SS_PIN);
+ 16e:	c0 98       	cbi	0x18, 0	; 24
+	cli();
+ 170:	f8 94       	cli
+ 172:	08 95       	ret
+
+00000174 <_Z8unselectv>:
+}
+
+void unselect()
+{
+	SS_PORT |= 1<<SS_PIN;
+ 174:	c0 9a       	sbi	0x18, 0	; 24
+	maybeInterrupts();
+ 176:	0e 94 b1 00 	call	0x162	; 0x162 <_Z15maybeInterruptsv>
+ 17a:	08 95       	ret
+
+0000017c <_Z7readRegh>:
+	}
+	setMode(oldMode);
+}
+
+uint8_t readReg(uint8_t addr)
+{
+ 17c:	cf 93       	push	r28
+ 17e:	c8 2f       	mov	r28, r24
+    select();
+ 180:	0e 94 b7 00 	call	0x16e	; 0x16e <_Z6selectv>
+	spi_fast_shift(addr & 0x7F);
+ 184:	8c 2f       	mov	r24, r28
+ 186:	8f 77       	andi	r24, 0x7F	; 127
+ 188:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	uint8_t regval = spi_fast_shift(0);
+ 18c:	80 e0       	ldi	r24, 0x00	; 0
+ 18e:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 192:	c8 2f       	mov	r28, r24
+	unselect();
+ 194:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+	return regval;
+}
+ 198:	8c 2f       	mov	r24, r28
+ 19a:	cf 91       	pop	r28
+ 19c:	08 95       	ret
+
+0000019e <_Z8writeReghh>:
+
+void writeReg(uint8_t addr, uint8_t value)
+{
+ 19e:	cf 93       	push	r28
+ 1a0:	df 93       	push	r29
+ 1a2:	d8 2f       	mov	r29, r24
+ 1a4:	c6 2f       	mov	r28, r22
+	select();
+ 1a6:	0e 94 b7 00 	call	0x16e	; 0x16e <_Z6selectv>
+	spi_fast_shift(addr | 0x80);
+ 1aa:	8d 2f       	mov	r24, r29
+ 1ac:	80 68       	ori	r24, 0x80	; 128
+ 1ae:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(value);
+ 1b2:	8c 2f       	mov	r24, r28
+ 1b4:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	unselect();
+ 1b8:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+}
+ 1bc:	df 91       	pop	r29
+ 1be:	cf 91       	pop	r28
+ 1c0:	08 95       	ret
+
+000001c2 <_Z10setAddressh>:
+}
+
+//set this node's address
+void setAddress(uint8_t addr)
+{
+	writeReg(REG_NODEADRS, addr);
+ 1c2:	68 2f       	mov	r22, r24
+ 1c4:	89 e3       	ldi	r24, 0x39	; 57
+ 1c6:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 1ca:	08 95       	ret
+
+000001cc <_Z10setNetworkh>:
+}
+
+//set network address
+void setNetwork(uint8_t networkID)
+{
+	writeReg(REG_SYNCVALUE2, networkID);
+ 1cc:	68 2f       	mov	r22, r24
+ 1ce:	80 e3       	ldi	r24, 0x30	; 48
+ 1d0:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 1d4:	08 95       	ret
+
+000001d6 <_Z13setPowerLevelh>:
+// this function implements 2 modes as follows:
+//       - for RFM69W the range is from 0-31 [-18dBm to 13dBm] (PA0 only on RFIO pin)
+//       - for RFM69HW the range is from 0-31 [5dBm to 20dBm]  (PA1 & PA2 on PA_BOOST pin & high Power PA settings - see section 3.3.7 in datasheet, p22)
+
+void setPowerLevel(uint8_t powerLevel)
+{
+ 1d6:	cf 93       	push	r28
+ 1d8:	c8 2f       	mov	r28, r24
+	uint8_t _powerLevel = powerLevel;
+	if (isRFM69HW==1) _powerLevel /= 2;
+ 1da:	80 91 01 01 	lds	r24, 0x0101
+ 1de:	81 30       	cpi	r24, 0x01	; 1
+ 1e0:	09 f4       	brne	.+2      	; 0x1e4 <_Z13setPowerLevelh+0xe>
+ 1e2:	c6 95       	lsr	r28
+	writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0xE0) | _powerLevel);
+ 1e4:	81 e1       	ldi	r24, 0x11	; 17
+ 1e6:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 1ea:	80 7e       	andi	r24, 0xE0	; 224
+ 1ec:	68 2f       	mov	r22, r24
+ 1ee:	6c 2b       	or	r22, r28
+ 1f0:	81 e1       	ldi	r24, 0x11	; 17
+ 1f2:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+}
+ 1f6:	cf 91       	pop	r28
+ 1f8:	08 95       	ret
+
+000001fa <_Z16setHighPowerRegsh>:
+}
+	
+// internal function
+void setHighPowerRegs(uint8_t onOff)
+{
+	if(onOff==1)
+ 1fa:	81 30       	cpi	r24, 0x01	; 1
+ 1fc:	49 f4       	brne	.+18     	; 0x210 <_Z16setHighPowerRegsh+0x16>
+	{
+	writeReg(REG_TESTPA1, 0x5D);
+ 1fe:	6d e5       	ldi	r22, 0x5D	; 93
+ 200:	8a e5       	ldi	r24, 0x5A	; 90
+ 202:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	writeReg(REG_TESTPA2, 0x7C);
+ 206:	6c e7       	ldi	r22, 0x7C	; 124
+ 208:	8c e5       	ldi	r24, 0x5C	; 92
+ 20a:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 20e:	08 95       	ret
+	}
+	else
+	{
+		writeReg(REG_TESTPA1, 0x55);
+ 210:	65 e5       	ldi	r22, 0x55	; 85
+ 212:	8a e5       	ldi	r24, 0x5A	; 90
+ 214:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+		writeReg(REG_TESTPA2, 0x70);
+ 218:	60 e7       	ldi	r22, 0x70	; 112
+ 21a:	8c e5       	ldi	r24, 0x5C	; 92
+ 21c:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 220:	08 95       	ret
+
+00000222 <_Z7setModeh>:
+	else
+	    writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | 0x00);	
+}
+
+void setMode(uint8_t newMode)
+{
+ 222:	cf 93       	push	r28
+	if (newMode == mode)
+ 224:	90 91 02 01 	lds	r25, 0x0102
+ 228:	98 17       	cp	r25, r24
+ 22a:	09 f4       	brne	.+2      	; 0x22e <_Z7setModeh+0xc>
+ 22c:	57 c0       	rjmp	.+174    	; 0x2dc <_Z7setModeh+0xba>
+ 22e:	c8 2f       	mov	r28, r24
+	return;
+
+	switch (newMode)
+ 230:	82 30       	cpi	r24, 0x02	; 2
+ 232:	69 f1       	breq	.+90     	; 0x28e <_Z7setModeh+0x6c>
+ 234:	28 f4       	brcc	.+10     	; 0x240 <_Z7setModeh+0x1e>
+ 236:	88 23       	and	r24, r24
+ 238:	f1 f1       	breq	.+124    	; 0x2b6 <_Z7setModeh+0x94>
+ 23a:	81 30       	cpi	r24, 0x01	; 1
+ 23c:	91 f1       	breq	.+100    	; 0x2a2 <_Z7setModeh+0x80>
+ 23e:	4e c0       	rjmp	.+156    	; 0x2dc <_Z7setModeh+0xba>
+ 240:	83 30       	cpi	r24, 0x03	; 3
+ 242:	a1 f0       	breq	.+40     	; 0x26c <_Z7setModeh+0x4a>
+ 244:	84 30       	cpi	r24, 0x04	; 4
+ 246:	09 f0       	breq	.+2      	; 0x24a <_Z7setModeh+0x28>
+ 248:	49 c0       	rjmp	.+146    	; 0x2dc <_Z7setModeh+0xba>
+	{
+		case RF69_MODE_TX:
+			writeReg(REG_OPMODE, (readReg(REG_OPMODE) & 0xE3) | RF_OPMODE_TRANSMITTER);
+ 24a:	81 e0       	ldi	r24, 0x01	; 1
+ 24c:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 250:	83 7e       	andi	r24, 0xE3	; 227
+ 252:	68 2f       	mov	r22, r24
+ 254:	6c 60       	ori	r22, 0x0C	; 12
+ 256:	81 e0       	ldi	r24, 0x01	; 1
+ 258:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+			if (isRFM69HW) setHighPowerRegs(1);
+ 25c:	80 91 01 01 	lds	r24, 0x0101
+ 260:	88 23       	and	r24, r24
+ 262:	89 f1       	breq	.+98     	; 0x2c6 <_Z7setModeh+0xa4>
+ 264:	81 e0       	ldi	r24, 0x01	; 1
+ 266:	0e 94 fd 00 	call	0x1fa	; 0x1fa <_Z16setHighPowerRegsh>
+ 26a:	2d c0       	rjmp	.+90     	; 0x2c6 <_Z7setModeh+0xa4>
+			break;
+		case RF69_MODE_RX:
+			writeReg(REG_OPMODE, (readReg(REG_OPMODE) & 0xE3) | RF_OPMODE_RECEIVER);
+ 26c:	81 e0       	ldi	r24, 0x01	; 1
+ 26e:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 272:	83 7e       	andi	r24, 0xE3	; 227
+ 274:	68 2f       	mov	r22, r24
+ 276:	60 61       	ori	r22, 0x10	; 16
+ 278:	81 e0       	ldi	r24, 0x01	; 1
+ 27a:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+			if (isRFM69HW) setHighPowerRegs(0);
+ 27e:	80 91 01 01 	lds	r24, 0x0101
+ 282:	88 23       	and	r24, r24
+ 284:	01 f1       	breq	.+64     	; 0x2c6 <_Z7setModeh+0xa4>
+ 286:	80 e0       	ldi	r24, 0x00	; 0
+ 288:	0e 94 fd 00 	call	0x1fa	; 0x1fa <_Z16setHighPowerRegsh>
+ 28c:	1c c0       	rjmp	.+56     	; 0x2c6 <_Z7setModeh+0xa4>
+			break;
+		case RF69_MODE_SYNTH:
+			writeReg(REG_OPMODE, (readReg(REG_OPMODE) & 0xE3) | RF_OPMODE_SYNTHESIZER);
+ 28e:	81 e0       	ldi	r24, 0x01	; 1
+ 290:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 294:	83 7e       	andi	r24, 0xE3	; 227
+ 296:	68 2f       	mov	r22, r24
+ 298:	68 60       	ori	r22, 0x08	; 8
+ 29a:	81 e0       	ldi	r24, 0x01	; 1
+ 29c:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+			break;
+ 2a0:	12 c0       	rjmp	.+36     	; 0x2c6 <_Z7setModeh+0xa4>
+		case RF69_MODE_STANDBY:
+			writeReg(REG_OPMODE, (readReg(REG_OPMODE) & 0xE3) | RF_OPMODE_STANDBY);
+ 2a2:	81 e0       	ldi	r24, 0x01	; 1
+ 2a4:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 2a8:	83 7e       	andi	r24, 0xE3	; 227
+ 2aa:	68 2f       	mov	r22, r24
+ 2ac:	64 60       	ori	r22, 0x04	; 4
+ 2ae:	81 e0       	ldi	r24, 0x01	; 1
+ 2b0:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+			break;
+ 2b4:	08 c0       	rjmp	.+16     	; 0x2c6 <_Z7setModeh+0xa4>
+		case RF69_MODE_SLEEP:
+			writeReg(REG_OPMODE, (readReg(REG_OPMODE) & 0xE3) | RF_OPMODE_SLEEP);
+ 2b6:	81 e0       	ldi	r24, 0x01	; 1
+ 2b8:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 2bc:	68 2f       	mov	r22, r24
+ 2be:	63 7e       	andi	r22, 0xE3	; 227
+ 2c0:	81 e0       	ldi	r24, 0x01	; 1
+ 2c2:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+		default:
+		return;
+	}
+    // we are using packet mode, so this check is not really needed
+    // but waiting for mode ready is necessary when going from sleep because the FIFO may not be immediately available from previous mode
+    while (mode == RF69_MODE_SLEEP && (readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00); // wait for ModeReady
+ 2c6:	90 91 02 01 	lds	r25, 0x0102
+ 2ca:	91 11       	cpse	r25, r1
+ 2cc:	05 c0       	rjmp	.+10     	; 0x2d8 <_Z7setModeh+0xb6>
+ 2ce:	87 e2       	ldi	r24, 0x27	; 39
+ 2d0:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 2d4:	88 23       	and	r24, r24
+ 2d6:	bc f7       	brge	.-18     	; 0x2c6 <_Z7setModeh+0xa4>
+    mode = newMode;
+ 2d8:	c0 93 02 01 	sts	0x0102, r28
+}
+ 2dc:	cf 91       	pop	r28
+ 2de:	08 95       	ret
+
+000002e0 <_Z12setHighPowerh>:
+}
+	
+// for RFM69HW only: you must call setHighPower(1) after rfm69_init() or else transmission won't work
+void setHighPower(uint8_t onOff) 
+{
+	isRFM69HW = onOff;
+ 2e0:	80 93 01 01 	sts	0x0101, r24
+	if(isRFM69HW==0)
+ 2e4:	81 11       	cpse	r24, r1
+ 2e6:	05 c0       	rjmp	.+10     	; 0x2f2 <_Z12setHighPowerh+0x12>
+	    writeReg(REG_OCP, RF_OCP_OFF);
+ 2e8:	6f e0       	ldi	r22, 0x0F	; 15
+ 2ea:	83 e1       	ldi	r24, 0x13	; 19
+ 2ec:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 2f0:	08 95       	ret
+	else if(isRFM69HW==1) // turning ON
+ 2f2:	81 30       	cpi	r24, 0x01	; 1
+ 2f4:	51 f4       	brne	.+20     	; 0x30a <_Z12setHighPowerh+0x2a>
+	    writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
+ 2f6:	81 e1       	ldi	r24, 0x11	; 17
+ 2f8:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 2fc:	8f 71       	andi	r24, 0x1F	; 31
+ 2fe:	68 2f       	mov	r22, r24
+ 300:	60 66       	ori	r22, 0x60	; 96
+ 302:	81 e1       	ldi	r24, 0x11	; 17
+ 304:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 308:	08 95       	ret
+	else
+	    writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
+ 30a:	60 91 00 01 	lds	r22, 0x0100
+ 30e:	60 68       	ori	r22, 0x80	; 128
+ 310:	81 e1       	ldi	r24, 0x11	; 17
+ 312:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 316:	08 95       	ret
+
+00000318 <_Z8readRSSIh>:
+
+// get the received signal strength indicator (RSSI)
+int16_t readRSSI(uint8_t forceTrigger)
+{
+	int16_t rssi = 0;
+	if (forceTrigger==1)
+ 318:	81 30       	cpi	r24, 0x01	; 1
+ 31a:	49 f4       	brne	.+18     	; 0x32e <_Z8readRSSIh+0x16>
+	{
+		// RSSI trigger not needed if DAGC is in continuous mode
+		writeReg(REG_RSSICONFIG, RF_RSSI_START);
+ 31c:	61 e0       	ldi	r22, 0x01	; 1
+ 31e:	83 e2       	ldi	r24, 0x23	; 35
+ 320:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+		while ((readReg(REG_RSSICONFIG) & RF_RSSI_DONE) == 0x00); // wait for RSSI_Ready
+ 324:	83 e2       	ldi	r24, 0x23	; 35
+ 326:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 32a:	81 ff       	sbrs	r24, 1
+ 32c:	fb cf       	rjmp	.-10     	; 0x324 <_Z8readRSSIh+0xc>
+	}
+	rssi = -readReg(REG_RSSIVALUE);
+ 32e:	84 e2       	ldi	r24, 0x24	; 36
+ 330:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 334:	90 e0       	ldi	r25, 0x00	; 0
+ 336:	91 95       	neg	r25
+ 338:	81 95       	neg	r24
+ 33a:	91 09       	sbc	r25, r1
+	rssi >>= 1;
+	return rssi;
+}
+ 33c:	95 95       	asr	r25
+ 33e:	87 95       	ror	r24
+ 340:	08 95       	ret
+
+00000342 <_Z7canSendv>:
+{
+	writeReg(REG_SYNCVALUE2, networkID);
+}
+
+uint8_t canSend()
+{
+ 342:	cf 93       	push	r28
+	if (mode == RF69_MODE_RX && PAYLOADLEN == 0 && readRSSI() < CSMA_LIMIT) // if signal stronger than -100dBm is detected assume channel activity
+ 344:	80 91 02 01 	lds	r24, 0x0102
+ 348:	83 30       	cpi	r24, 0x03	; 3
+ 34a:	79 f4       	brne	.+30     	; 0x36a <_Z7canSendv+0x28>
+ 34c:	c0 91 17 01 	lds	r28, 0x0117
+ 350:	c1 11       	cpse	r28, r1
+ 352:	0d c0       	rjmp	.+26     	; 0x36e <_Z7canSendv+0x2c>
+ 354:	80 e0       	ldi	r24, 0x00	; 0
+ 356:	0e 94 8c 01 	call	0x318	; 0x318 <_Z8readRSSIh>
+ 35a:	86 3a       	cpi	r24, 0xA6	; 166
+ 35c:	9f 4f       	sbci	r25, 0xFF	; 255
+ 35e:	44 f4       	brge	.+16     	; 0x370 <_Z7canSendv+0x2e>
+	{
+		setMode(RF69_MODE_STANDBY);
+ 360:	81 e0       	ldi	r24, 0x01	; 1
+ 362:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+		return 1;
+ 366:	c1 e0       	ldi	r28, 0x01	; 1
+ 368:	03 c0       	rjmp	.+6      	; 0x370 <_Z7canSendv+0x2e>
+	}
+	return 0;
+ 36a:	c0 e0       	ldi	r28, 0x00	; 0
+ 36c:	01 c0       	rjmp	.+2      	; 0x370 <_Z7canSendv+0x2e>
+ 36e:	c0 e0       	ldi	r28, 0x00	; 0
+}
+ 370:	8c 2f       	mov	r24, r28
+ 372:	cf 91       	pop	r28
+ 374:	08 95       	ret
+
+00000376 <_Z12receiveBeginv>:
+	return 0;
+}
+
+// internal function
+void receiveBegin() {
+	DATALEN = 0;
+ 376:	10 92 1a 01 	sts	0x011A, r1
+	SENDERID = 0;
+ 37a:	10 92 19 01 	sts	0x0119, r1
+	TARGETID = 0;
+ 37e:	10 92 18 01 	sts	0x0118, r1
+	PAYLOADLEN = 0;
+ 382:	10 92 17 01 	sts	0x0117, r1
+	ACK_REQUESTED = 0;
+ 386:	10 92 16 01 	sts	0x0116, r1
+	ACK_RECEIVED = 0;
+ 38a:	10 92 15 01 	sts	0x0115, r1
+	RSSI = 0;
+ 38e:	10 92 14 01 	sts	0x0114, r1
+ 392:	10 92 13 01 	sts	0x0113, r1
+	if (readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PAYLOADREADY)
+ 396:	88 e2       	ldi	r24, 0x28	; 40
+ 398:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 39c:	82 ff       	sbrs	r24, 2
+ 39e:	08 c0       	rjmp	.+16     	; 0x3b0 <_Z12receiveBeginv+0x3a>
+	writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFB) | RF_PACKET2_RXRESTART); // avoid RX deadlocks
+ 3a0:	8d e3       	ldi	r24, 0x3D	; 61
+ 3a2:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 3a6:	68 2f       	mov	r22, r24
+ 3a8:	64 60       	ori	r22, 0x04	; 4
+ 3aa:	8d e3       	ldi	r24, 0x3D	; 61
+ 3ac:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_01); // set DIO0 to "PAYLOADREADY" in receive mode
+ 3b0:	60 e4       	ldi	r22, 0x40	; 64
+ 3b2:	85 e2       	ldi	r24, 0x25	; 37
+ 3b4:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	setMode(RF69_MODE_RX);
+ 3b8:	83 e0       	ldi	r24, 0x03	; 3
+ 3ba:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+ 3be:	08 95       	ret
+
+000003c0 <_Z11receiveDonev>:
+	return 0;
+}
+
+// checks if a packet was received and/or puts transceiver in receive (ie RX or listen) mode
+uint8_t receiveDone() {
+	cli();
+ 3c0:	f8 94       	cli
+	if (mode == RF69_MODE_RX && PAYLOADLEN > 0)
+ 3c2:	80 91 02 01 	lds	r24, 0x0102
+ 3c6:	83 30       	cpi	r24, 0x03	; 3
+ 3c8:	61 f4       	brne	.+24     	; 0x3e2 <_Z11receiveDonev+0x22>
+ 3ca:	80 91 17 01 	lds	r24, 0x0117
+ 3ce:	81 11       	cpse	r24, r1
+ 3d0:	0d c0       	rjmp	.+26     	; 0x3ec <_Z11receiveDonev+0x2c>
+ 3d2:	07 c0       	rjmp	.+14     	; 0x3e2 <_Z11receiveDonev+0x22>
+		setMode(RF69_MODE_STANDBY); // enables interrupts
+		return 1;
+	}
+	else if (mode == RF69_MODE_RX) // already in RX no payload yet
+	{
+		sei(); // explicitly re-enable interrupts
+ 3d4:	78 94       	sei
+		return 0;
+ 3d6:	80 e0       	ldi	r24, 0x00	; 0
+ 3d8:	08 95       	ret
+	}
+	receiveBegin();
+ 3da:	0e 94 bb 01 	call	0x376	; 0x376 <_Z12receiveBeginv>
+	return 0;
+ 3de:	80 e0       	ldi	r24, 0x00	; 0
+ 3e0:	08 95       	ret
+	if (mode == RF69_MODE_RX && PAYLOADLEN > 0)
+	{
+		setMode(RF69_MODE_STANDBY); // enables interrupts
+		return 1;
+	}
+	else if (mode == RF69_MODE_RX) // already in RX no payload yet
+ 3e2:	80 91 02 01 	lds	r24, 0x0102
+ 3e6:	83 30       	cpi	r24, 0x03	; 3
+ 3e8:	c1 f7       	brne	.-16     	; 0x3da <_Z11receiveDonev+0x1a>
+ 3ea:	f4 cf       	rjmp	.-24     	; 0x3d4 <_Z11receiveDonev+0x14>
+// checks if a packet was received and/or puts transceiver in receive (ie RX or listen) mode
+uint8_t receiveDone() {
+	cli();
+	if (mode == RF69_MODE_RX && PAYLOADLEN > 0)
+	{
+		setMode(RF69_MODE_STANDBY); // enables interrupts
+ 3ec:	81 e0       	ldi	r24, 0x01	; 1
+ 3ee:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+		return 1;
+ 3f2:	81 e0       	ldi	r24, 0x01	; 1
+		sei(); // explicitly re-enable interrupts
+		return 0;
+	}
+	receiveBegin();
+	return 0;
+}
+ 3f4:	08 95       	ret
+
+000003f6 <_Z7encryptPKc>:
+
+// To enable encryption: radio.encrypt("ABCDEFGHIJKLMNOP");
+// To disable encryption: encrypt(null) or encrypt(0)
+// KEY HAS TO BE 16 bytes !!!
+void encrypt(const char* key) 
+{
+ 3f6:	0f 93       	push	r16
+ 3f8:	1f 93       	push	r17
+ 3fa:	cf 93       	push	r28
+ 3fc:	df 93       	push	r29
+ 3fe:	8c 01       	movw	r16, r24
+	setMode(RF69_MODE_STANDBY);
+ 400:	81 e0       	ldi	r24, 0x01	; 1
+ 402:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+	if (key != 0)
+ 406:	01 15       	cp	r16, r1
+ 408:	11 05       	cpc	r17, r1
+ 40a:	89 f0       	breq	.+34     	; 0x42e <_Z7encryptPKc+0x38>
+	{
+		select();
+ 40c:	0e 94 b7 00 	call	0x16e	; 0x16e <_Z6selectv>
+		spi_fast_shift(REG_AESKEY1 | 0x80);
+ 410:	8e eb       	ldi	r24, 0xBE	; 190
+ 412:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 416:	e8 01       	movw	r28, r16
+ 418:	00 5f       	subi	r16, 0xF0	; 240
+ 41a:	1f 4f       	sbci	r17, 0xFF	; 255
+		for (uint8_t i = 0; i < 16; i++)
+		    spi_fast_shift(key[i]);
+ 41c:	89 91       	ld	r24, Y+
+ 41e:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	setMode(RF69_MODE_STANDBY);
+	if (key != 0)
+	{
+		select();
+		spi_fast_shift(REG_AESKEY1 | 0x80);
+		for (uint8_t i = 0; i < 16; i++)
+ 422:	c0 17       	cp	r28, r16
+ 424:	d1 07       	cpc	r29, r17
+ 426:	d1 f7       	brne	.-12     	; 0x41c <_Z7encryptPKc+0x26>
+		    spi_fast_shift(key[i]);
+		unselect();
+ 428:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+ 42c:	08 c0       	rjmp	.+16     	; 0x43e <_Z7encryptPKc+0x48>
+	}
+	else
+	    writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | 0x00);	
+ 42e:	8d e3       	ldi	r24, 0x3D	; 61
+ 430:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 434:	68 2f       	mov	r22, r24
+ 436:	6e 7f       	andi	r22, 0xFE	; 254
+ 438:	8d e3       	ldi	r24, 0x3D	; 61
+ 43a:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+}
+ 43e:	df 91       	pop	r29
+ 440:	cf 91       	pop	r28
+ 442:	1f 91       	pop	r17
+ 444:	0f 91       	pop	r16
+ 446:	08 95       	ret
+
+00000448 <_Z10rfm69_inithh>:
+void maybeInterrupts();
+void select();
+void unselect();
+
+void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by default. Will work on it later. Have to change 0x07, 0x08, 0x09
+{
+ 448:	ff 92       	push	r15
+ 44a:	0f 93       	push	r16
+ 44c:	1f 93       	push	r17
+ 44e:	cf 93       	push	r28
+ 450:	df 93       	push	r29
+ 452:	cd b7       	in	r28, 0x3d	; 61
+ 454:	de b7       	in	r29, 0x3e	; 62
+ 456:	ae 97       	sbiw	r28, 0x2e	; 46
+ 458:	0f b6       	in	r0, 0x3f	; 63
+ 45a:	f8 94       	cli
+ 45c:	de bf       	out	0x3e, r29	; 62
+ 45e:	0f be       	out	0x3f, r0	; 63
+ 460:	cd bf       	out	0x3d, r28	; 61
+ 462:	f8 2e       	mov	r15, r24
+ 464:	06 2f       	mov	r16, r22
+		/* 0x3C */ { REG_FIFOTHRESH, RF_FIFOTHRESH_TXSTART_FIFONOTEMPTY | RF_FIFOTHRESH_VALUE }, // TX on FIFO not empty
+		/* 0x3D */ { REG_PACKETCONFIG2, RF_PACKET2_RXRESTARTDELAY_2BITS | RF_PACKET2_AUTORXRESTART_ON | RF_PACKET2_AES_OFF }, // RXRESTARTDELAY must match transmitter PA ramp-down time (bitrate dependent)
+		//for BR-19200: /* 0x3D */ { REG_PACKETCONFIG2, RF_PACKET2_RXRESTARTDELAY_NONE | RF_PACKET2_AUTORXRESTART_ON | RF_PACKET2_AES_OFF }, // RXRESTARTDELAY must match transmitter PA ramp-down time (bitrate dependent)
+		/* 0x6F */ { REG_TESTDAGC, RF_DAGC_IMPROVED_LOWBETA0 }, // run DAGC continuously in RX mode for Fading Margin Improvement, recommended default for AfcLowBetaOn=0
+		{255, 0}
+	};
+ 466:	8e e2       	ldi	r24, 0x2E	; 46
+ 468:	fe 01       	movw	r30, r28
+ 46a:	31 96       	adiw	r30, 0x01	; 1
+ 46c:	df 01       	movw	r26, r30
+ 46e:	98 2f       	mov	r25, r24
+ 470:	1d 92       	st	X+, r1
+ 472:	9a 95       	dec	r25
+ 474:	e9 f7       	brne	.-6      	; 0x470 <_Z10rfm69_inithh+0x28>
+ 476:	91 e0       	ldi	r25, 0x01	; 1
+ 478:	99 83       	std	Y+1, r25	; 0x01
+ 47a:	24 e0       	ldi	r18, 0x04	; 4
+ 47c:	2a 83       	std	Y+2, r18	; 0x02
+ 47e:	92 e0       	ldi	r25, 0x02	; 2
+ 480:	9b 83       	std	Y+3, r25	; 0x03
+ 482:	93 e0       	ldi	r25, 0x03	; 3
+ 484:	9d 83       	std	Y+5, r25	; 0x05
+ 486:	3d e0       	ldi	r19, 0x0D	; 13
+ 488:	3e 83       	std	Y+6, r19	; 0x06
+ 48a:	2f 83       	std	Y+7, r18	; 0x07
+ 48c:	25 e0       	ldi	r18, 0x05	; 5
+ 48e:	28 87       	std	Y+8, r18	; 0x08
+ 490:	29 87       	std	Y+9, r18	; 0x09
+ 492:	9a 87       	std	Y+10, r25	; 0x0a
+ 494:	96 e0       	ldi	r25, 0x06	; 6
+ 496:	9b 87       	std	Y+11, r25	; 0x0b
+ 498:	93 e3       	ldi	r25, 0x33	; 51
+ 49a:	9c 87       	std	Y+12, r25	; 0x0c
+ 49c:	27 e0       	ldi	r18, 0x07	; 7
+ 49e:	2d 87       	std	Y+13, r18	; 0x0d
+ 4a0:	9c e6       	ldi	r25, 0x6C	; 108
+ 4a2:	9e 87       	std	Y+14, r25	; 0x0e
+ 4a4:	98 e0       	ldi	r25, 0x08	; 8
+ 4a6:	9f 87       	std	Y+15, r25	; 0x0f
+ 4a8:	30 e4       	ldi	r19, 0x40	; 64
+ 4aa:	38 8b       	std	Y+16, r19	; 0x10
+ 4ac:	99 e0       	ldi	r25, 0x09	; 9
+ 4ae:	99 8b       	std	Y+17, r25	; 0x11
+ 4b0:	99 e1       	ldi	r25, 0x19	; 25
+ 4b2:	9b 8b       	std	Y+19, r25	; 0x13
+ 4b4:	92 e4       	ldi	r25, 0x42	; 66
+ 4b6:	9c 8b       	std	Y+20, r25	; 0x14
+ 4b8:	45 e2       	ldi	r20, 0x25	; 37
+ 4ba:	4d 8b       	std	Y+21, r20	; 0x15
+ 4bc:	3e 8b       	std	Y+22, r19	; 0x16
+ 4be:	36 e2       	ldi	r19, 0x26	; 38
+ 4c0:	3f 8b       	std	Y+23, r19	; 0x17
+ 4c2:	28 8f       	std	Y+24, r18	; 0x18
+ 4c4:	28 e2       	ldi	r18, 0x28	; 40
+ 4c6:	29 8f       	std	Y+25, r18	; 0x19
+ 4c8:	20 e1       	ldi	r18, 0x10	; 16
+ 4ca:	2a 8f       	std	Y+26, r18	; 0x1a
+ 4cc:	29 e2       	ldi	r18, 0x29	; 41
+ 4ce:	2b 8f       	std	Y+27, r18	; 0x1b
+ 4d0:	2c ed       	ldi	r18, 0xDC	; 220
+ 4d2:	2c 8f       	std	Y+28, r18	; 0x1c
+ 4d4:	8d 8f       	std	Y+29, r24	; 0x1d
+ 4d6:	88 e8       	ldi	r24, 0x88	; 136
+ 4d8:	8e 8f       	std	Y+30, r24	; 0x1e
+ 4da:	8f e2       	ldi	r24, 0x2F	; 47
+ 4dc:	8f 8f       	std	Y+31, r24	; 0x1f
+ 4de:	8d e2       	ldi	r24, 0x2D	; 45
+ 4e0:	88 a3       	std	Y+32, r24	; 0x20
+ 4e2:	80 e3       	ldi	r24, 0x30	; 48
+ 4e4:	89 a3       	std	Y+33, r24	; 0x21
+ 4e6:	27 e3       	ldi	r18, 0x37	; 55
+ 4e8:	2b a3       	std	Y+35, r18	; 0x23
+ 4ea:	20 e9       	ldi	r18, 0x90	; 144
+ 4ec:	2c a3       	std	Y+36, r18	; 0x24
+ 4ee:	28 e3       	ldi	r18, 0x38	; 56
+ 4f0:	2d a3       	std	Y+37, r18	; 0x25
+ 4f2:	9e a3       	std	Y+38, r25	; 0x26
+ 4f4:	9c e3       	ldi	r25, 0x3C	; 60
+ 4f6:	9f a3       	std	Y+39, r25	; 0x27
+ 4f8:	9f e8       	ldi	r25, 0x8F	; 143
+ 4fa:	98 a7       	std	Y+40, r25	; 0x28
+ 4fc:	9d e3       	ldi	r25, 0x3D	; 61
+ 4fe:	99 a7       	std	Y+41, r25	; 0x29
+ 500:	92 e1       	ldi	r25, 0x12	; 18
+ 502:	9a a7       	std	Y+42, r25	; 0x2a
+ 504:	9f e6       	ldi	r25, 0x6F	; 111
+ 506:	9b a7       	std	Y+43, r25	; 0x2b
+ 508:	8c a7       	std	Y+44, r24	; 0x2c
+ 50a:	8f ef       	ldi	r24, 0xFF	; 255
+ 50c:	8d a7       	std	Y+45, r24	; 0x2d
+ 50e:	6a a3       	std	Y+34, r22	; 0x22
+    
+	spi_init(); // spi init
+ 510:	0e 94 65 00 	call	0xca	; 0xca <_Z8spi_initv>
+	DDRC |= 1<<PC6; // temporary for testing. LED output
+ 514:	a6 9a       	sbi	0x14, 6	; 20
+	SS_DDR |= 1<<SS_PIN; // setting SS as output
+ 516:	b8 9a       	sbi	0x17, 0	; 23
+	SS_PORT |= 1<<SS_PIN; // setting slave select high
+ 518:	c0 9a       	sbi	0x18, 0	; 24
+	INT_DDR &= ~(1<<INT_PIN); // setting interrupt pin input. no problem if not given
+ 51a:	15 98       	cbi	0x02, 5	; 2
+	INT_PORT &= ~(1<<INT_PIN); // setting pull down. because rising will cause interrupt. external pull down is needed.
+ 51c:	1d 98       	cbi	0x03, 5	; 3
+	
+	while (readReg(REG_SYNCVALUE1) != 0xaa)
+ 51e:	04 c0       	rjmp	.+8      	; 0x528 <_Z10rfm69_inithh+0xe0>
+	{
+		writeReg(REG_SYNCVALUE1, 0xaa);
+ 520:	6a ea       	ldi	r22, 0xAA	; 170
+ 522:	8f e2       	ldi	r24, 0x2F	; 47
+ 524:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	SS_DDR |= 1<<SS_PIN; // setting SS as output
+	SS_PORT |= 1<<SS_PIN; // setting slave select high
+	INT_DDR &= ~(1<<INT_PIN); // setting interrupt pin input. no problem if not given
+	INT_PORT &= ~(1<<INT_PIN); // setting pull down. because rising will cause interrupt. external pull down is needed.
+	
+	while (readReg(REG_SYNCVALUE1) != 0xaa)
+ 528:	8f e2       	ldi	r24, 0x2F	; 47
+ 52a:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 52e:	8a 3a       	cpi	r24, 0xAA	; 170
+ 530:	b9 f7       	brne	.-18     	; 0x520 <_Z10rfm69_inithh+0xd8>
+ 532:	04 c0       	rjmp	.+8      	; 0x53c <_Z10rfm69_inithh+0xf4>
+		writeReg(REG_SYNCVALUE1, 0xaa);
+	}
+
+	while (readReg(REG_SYNCVALUE1) != 0x55)
+	{
+		writeReg(REG_SYNCVALUE1, 0x55);
+ 534:	65 e5       	ldi	r22, 0x55	; 85
+ 536:	8f e2       	ldi	r24, 0x2F	; 47
+ 538:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	while (readReg(REG_SYNCVALUE1) != 0xaa)
+	{
+		writeReg(REG_SYNCVALUE1, 0xaa);
+	}
+
+	while (readReg(REG_SYNCVALUE1) != 0x55)
+ 53c:	8f e2       	ldi	r24, 0x2F	; 47
+ 53e:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 542:	85 35       	cpi	r24, 0x55	; 85
+ 544:	b9 f7       	brne	.-18     	; 0x534 <_Z10rfm69_inithh+0xec>
+	{
+		writeReg(REG_SYNCVALUE1, 0x55);
+	}
+
+	for (uint8_t i = 0; CONFIG[i][0] != 255; i++)
+ 546:	89 81       	ldd	r24, Y+1	; 0x01
+ 548:	8f 3f       	cpi	r24, 0xFF	; 255
+ 54a:	e9 f0       	breq	.+58     	; 0x586 <_Z10rfm69_inithh+0x13e>
+ 54c:	20 e0       	ldi	r18, 0x00	; 0
+ 54e:	30 e0       	ldi	r19, 0x00	; 0
+ 550:	10 e0       	ldi	r17, 0x00	; 0
+	    writeReg(CONFIG[i][0], CONFIG[i][1]);
+ 552:	22 0f       	add	r18, r18
+ 554:	33 1f       	adc	r19, r19
+ 556:	e1 e0       	ldi	r30, 0x01	; 1
+ 558:	f0 e0       	ldi	r31, 0x00	; 0
+ 55a:	ec 0f       	add	r30, r28
+ 55c:	fd 1f       	adc	r31, r29
+ 55e:	e2 0f       	add	r30, r18
+ 560:	f3 1f       	adc	r31, r19
+ 562:	61 81       	ldd	r22, Z+1	; 0x01
+ 564:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	while (readReg(REG_SYNCVALUE1) != 0x55)
+	{
+		writeReg(REG_SYNCVALUE1, 0x55);
+	}
+
+	for (uint8_t i = 0; CONFIG[i][0] != 255; i++)
+ 568:	1f 5f       	subi	r17, 0xFF	; 255
+ 56a:	21 2f       	mov	r18, r17
+ 56c:	30 e0       	ldi	r19, 0x00	; 0
+ 56e:	f9 01       	movw	r30, r18
+ 570:	ee 0f       	add	r30, r30
+ 572:	ff 1f       	adc	r31, r31
+ 574:	a1 e0       	ldi	r26, 0x01	; 1
+ 576:	b0 e0       	ldi	r27, 0x00	; 0
+ 578:	ac 0f       	add	r26, r28
+ 57a:	bd 1f       	adc	r27, r29
+ 57c:	ea 0f       	add	r30, r26
+ 57e:	fb 1f       	adc	r31, r27
+ 580:	80 81       	ld	r24, Z
+ 582:	8f 3f       	cpi	r24, 0xFF	; 255
+ 584:	31 f7       	brne	.-52     	; 0x552 <_Z10rfm69_inithh+0x10a>
+	    writeReg(CONFIG[i][0], CONFIG[i][1]);
+
+	// Encryption is persistent between resets and can trip you up during debugging.
+	// Disable it during initialization so we always start from a known state.
+	encrypt(0);
+ 586:	80 e0       	ldi	r24, 0x00	; 0
+ 588:	90 e0       	ldi	r25, 0x00	; 0
+ 58a:	0e 94 fb 01 	call	0x3f6	; 0x3f6 <_Z7encryptPKc>
+
+	setHighPower(isRFM69HW); // called regardless if it's a RFM69W or RFM69HW
+ 58e:	80 91 01 01 	lds	r24, 0x0101
+ 592:	0e 94 70 01 	call	0x2e0	; 0x2e0 <_Z12setHighPowerh>
+	setMode(RF69_MODE_STANDBY);
+ 596:	81 e0       	ldi	r24, 0x01	; 1
+ 598:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+	while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00);
+ 59c:	87 e2       	ldi	r24, 0x27	; 39
+ 59e:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 5a2:	88 23       	and	r24, r24
+ 5a4:	dc f7       	brge	.-10     	; 0x59c <_Z10rfm69_inithh+0x154>
+	
+	EICRB |= (1<<ISC51)|(1<<ISC50); // setting INT5 rising. details datasheet p91. must change with interrupt pin.
+ 5a6:	8a b7       	in	r24, 0x3a	; 58
+ 5a8:	8c 60       	ori	r24, 0x0C	; 12
+ 5aa:	8a bf       	out	0x3a, r24	; 58
+	EIMSK |= 1<<INT5; // enable INT5
+ 5ac:	99 b7       	in	r25, 0x39	; 57
+ 5ae:	90 62       	ori	r25, 0x20	; 32
+ 5b0:	99 bf       	out	0x39, r25	; 57
+    inISR = 0;
+ 5b2:	10 92 0c 01 	sts	0x010C, r1
+	//sei(); //not needed because in millis_init() sei declared :)
+	millis_init(); // to get miliseconds
+ 5b6:	0e 94 75 00 	call	0xea	; 0xea <_Z11millis_initv>
+
+	address = nodeID;
+ 5ba:	f0 92 12 01 	sts	0x0112, r15
+	setAddress(address); // setting this node id
+ 5be:	8f 2d       	mov	r24, r15
+ 5c0:	0e 94 e1 00 	call	0x1c2	; 0x1c2 <_Z10setAddressh>
+	setNetwork(networkID);
+ 5c4:	80 2f       	mov	r24, r16
+ 5c6:	0e 94 e6 00 	call	0x1cc	; 0x1cc <_Z10setNetworkh>
+}
+ 5ca:	ae 96       	adiw	r28, 0x2e	; 46
+ 5cc:	0f b6       	in	r0, 0x3f	; 63
+ 5ce:	f8 94       	cli
+ 5d0:	de bf       	out	0x3e, r29	; 62
+ 5d2:	0f be       	out	0x3f, r0	; 63
+ 5d4:	cd bf       	out	0x3d, r28	; 61
+ 5d6:	df 91       	pop	r29
+ 5d8:	cf 91       	pop	r28
+ 5da:	1f 91       	pop	r17
+ 5dc:	0f 91       	pop	r16
+ 5de:	ff 90       	pop	r15
+ 5e0:	08 95       	ret
+
+000005e2 <_Z9sendFramehPKvhhh>:
+	return rssi;
+}
+
+// internal function
+void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK, uint8_t sendACK)
+{
+ 5e2:	ef 92       	push	r14
+ 5e4:	ff 92       	push	r15
+ 5e6:	0f 93       	push	r16
+ 5e8:	1f 93       	push	r17
+ 5ea:	cf 93       	push	r28
+ 5ec:	df 93       	push	r29
+ 5ee:	c8 2f       	mov	r28, r24
+ 5f0:	7b 01       	movw	r14, r22
+ 5f2:	14 2f       	mov	r17, r20
+ 5f4:	d2 2f       	mov	r29, r18
+	setMode(RF69_MODE_STANDBY); // turn off receiver to prevent reception while filling fifo
+ 5f6:	81 e0       	ldi	r24, 0x01	; 1
+ 5f8:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+	while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00); // wait for ModeReady
+ 5fc:	87 e2       	ldi	r24, 0x27	; 39
+ 5fe:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 602:	88 23       	and	r24, r24
+ 604:	dc f7       	brge	.-10     	; 0x5fc <_Z9sendFramehPKvhhh+0x1a>
+	writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_00); // DIO0 is "Packet Sent"
+ 606:	60 e0       	ldi	r22, 0x00	; 0
+ 608:	85 e2       	ldi	r24, 0x25	; 37
+ 60a:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+ 60e:	1e 33       	cpi	r17, 0x3E	; 62
+ 610:	08 f0       	brcs	.+2      	; 0x614 <_Z9sendFramehPKvhhh+0x32>
+ 612:	1d e3       	ldi	r17, 0x3D	; 61
+	if (bufferSize > RF69_MAX_DATA_LEN)
+	    bufferSize = RF69_MAX_DATA_LEN;
+
+	// control byte
+	uint8_t CTLbyte = 0x00;
+	if (sendACK==1)
+ 614:	01 30       	cpi	r16, 0x01	; 1
+ 616:	21 f0       	breq	.+8      	; 0x620 <_Z9sendFramehPKvhhh+0x3e>
+	    CTLbyte = RFM69_CTL_SENDACK;
+	else if (requestACK==1)
+ 618:	d1 30       	cpi	r29, 0x01	; 1
+ 61a:	21 f4       	brne	.+8      	; 0x624 <_Z9sendFramehPKvhhh+0x42>
+	    CTLbyte = RFM69_CTL_REQACK;
+ 61c:	d0 e4       	ldi	r29, 0x40	; 64
+ 61e:	03 c0       	rjmp	.+6      	; 0x626 <_Z9sendFramehPKvhhh+0x44>
+	    bufferSize = RF69_MAX_DATA_LEN;
+
+	// control byte
+	uint8_t CTLbyte = 0x00;
+	if (sendACK==1)
+	    CTLbyte = RFM69_CTL_SENDACK;
+ 620:	d0 e8       	ldi	r29, 0x80	; 128
+ 622:	01 c0       	rjmp	.+2      	; 0x626 <_Z9sendFramehPKvhhh+0x44>
+	writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_00); // DIO0 is "Packet Sent"
+	if (bufferSize > RF69_MAX_DATA_LEN)
+	    bufferSize = RF69_MAX_DATA_LEN;
+
+	// control byte
+	uint8_t CTLbyte = 0x00;
+ 624:	d0 e0       	ldi	r29, 0x00	; 0
+	    CTLbyte = RFM69_CTL_SENDACK;
+	else if (requestACK==1)
+	    CTLbyte = RFM69_CTL_REQACK;
+
+	// write to FIFO
+	select(); //enable data transfer
+ 626:	0e 94 b7 00 	call	0x16e	; 0x16e <_Z6selectv>
+	spi_fast_shift(REG_FIFO | 0x80);
+ 62a:	80 e8       	ldi	r24, 0x80	; 128
+ 62c:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(bufferSize + 3);
+ 630:	83 e0       	ldi	r24, 0x03	; 3
+ 632:	81 0f       	add	r24, r17
+ 634:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(toAddress);
+ 638:	8c 2f       	mov	r24, r28
+ 63a:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(address);
+ 63e:	80 91 12 01 	lds	r24, 0x0112
+ 642:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(CTLbyte);
+ 646:	8d 2f       	mov	r24, r29
+ 648:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+
+	for (uint8_t i = 0; i < bufferSize; i++)
+ 64c:	11 23       	and	r17, r17
+ 64e:	71 f0       	breq	.+28     	; 0x66c <_Z9sendFramehPKvhhh+0x8a>
+ 650:	e7 01       	movw	r28, r14
+ 652:	11 50       	subi	r17, 0x01	; 1
+ 654:	01 2f       	mov	r16, r17
+ 656:	10 e0       	ldi	r17, 0x00	; 0
+ 658:	0f 5f       	subi	r16, 0xFF	; 255
+ 65a:	1f 4f       	sbci	r17, 0xFF	; 255
+ 65c:	0e 0d       	add	r16, r14
+ 65e:	1f 1d       	adc	r17, r15
+	    spi_fast_shift(((uint8_t*) buffer)[i]);
+ 660:	89 91       	ld	r24, Y+
+ 662:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+	spi_fast_shift(bufferSize + 3);
+	spi_fast_shift(toAddress);
+	spi_fast_shift(address);
+	spi_fast_shift(CTLbyte);
+
+	for (uint8_t i = 0; i < bufferSize; i++)
+ 666:	c0 17       	cp	r28, r16
+ 668:	d1 07       	cpc	r29, r17
+ 66a:	d1 f7       	brne	.-12     	; 0x660 <_Z9sendFramehPKvhhh+0x7e>
+	    spi_fast_shift(((uint8_t*) buffer)[i]);
+	
+    unselect();
+ 66c:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+
+	// no need to wait for transmit mode to be ready since its handled by the radio
+	setMode(RF69_MODE_TX);
+ 670:	84 e0       	ldi	r24, 0x04	; 4
+ 672:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+	millis_current = millis();
+ 676:	0e 94 81 00 	call	0x102	; 0x102 <_Z6millisv>
+ 67a:	60 93 0d 01 	sts	0x010D, r22
+ 67e:	70 93 0e 01 	sts	0x010E, r23
+ 682:	80 93 0f 01 	sts	0x010F, r24
+ 686:	90 93 10 01 	sts	0x0110, r25
+	//_delay_ms(500);
+	// wait for DIO to high
+	// for PINE5
+	//PORTC |= 1<<PC6;
+	while (bit_is_clear(PINE, 5) && millis() - millis_current < RF69_TX_LIMIT_MS); // must change with interrupt pin change
+ 68a:	0d 99       	sbic	0x01, 5	; 1
+ 68c:	15 c0       	rjmp	.+42     	; 0x6b8 <_Z9sendFramehPKvhhh+0xd6>
+ 68e:	0e 94 81 00 	call	0x102	; 0x102 <_Z6millisv>
+ 692:	00 91 0d 01 	lds	r16, 0x010D
+ 696:	10 91 0e 01 	lds	r17, 0x010E
+ 69a:	20 91 0f 01 	lds	r18, 0x010F
+ 69e:	30 91 10 01 	lds	r19, 0x0110
+ 6a2:	dc 01       	movw	r26, r24
+ 6a4:	cb 01       	movw	r24, r22
+ 6a6:	80 1b       	sub	r24, r16
+ 6a8:	91 0b       	sbc	r25, r17
+ 6aa:	a2 0b       	sbc	r26, r18
+ 6ac:	b3 0b       	sbc	r27, r19
+ 6ae:	88 3e       	cpi	r24, 0xE8	; 232
+ 6b0:	93 40       	sbci	r25, 0x03	; 3
+ 6b2:	a1 05       	cpc	r26, r1
+ 6b4:	b1 05       	cpc	r27, r1
+ 6b6:	48 f3       	brcs	.-46     	; 0x68a <_Z9sendFramehPKvhhh+0xa8>
+	//PORTC &= ~(1<<PC6); //temporary for testing
+	setMode(RF69_MODE_STANDBY);
+ 6b8:	81 e0       	ldi	r24, 0x01	; 1
+ 6ba:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+}
+ 6be:	df 91       	pop	r29
+ 6c0:	cf 91       	pop	r28
+ 6c2:	1f 91       	pop	r17
+ 6c4:	0f 91       	pop	r16
+ 6c6:	ff 90       	pop	r15
+ 6c8:	ef 90       	pop	r14
+ 6ca:	08 95       	ret
+
+000006cc <_Z4sendhPKvhh>:
+	}
+	return 0;
+}
+
+void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK)
+{
+ 6cc:	df 92       	push	r13
+ 6ce:	ef 92       	push	r14
+ 6d0:	ff 92       	push	r15
+ 6d2:	0f 93       	push	r16
+ 6d4:	1f 93       	push	r17
+ 6d6:	cf 93       	push	r28
+ 6d8:	df 93       	push	r29
+ 6da:	f8 2e       	mov	r15, r24
+ 6dc:	eb 01       	movw	r28, r22
+ 6de:	e4 2e       	mov	r14, r20
+ 6e0:	d2 2e       	mov	r13, r18
+	writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFB) | RF_PACKET2_RXRESTART); // avoid RX deadlocks
+ 6e2:	8d e3       	ldi	r24, 0x3D	; 61
+ 6e4:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 6e8:	68 2f       	mov	r22, r24
+ 6ea:	64 60       	ori	r22, 0x04	; 4
+ 6ec:	8d e3       	ldi	r24, 0x3D	; 61
+ 6ee:	0e 94 cf 00 	call	0x19e	; 0x19e <_Z8writeReghh>
+	millis_current = millis();
+ 6f2:	0e 94 81 00 	call	0x102	; 0x102 <_Z6millisv>
+ 6f6:	60 93 0d 01 	sts	0x010D, r22
+ 6fa:	70 93 0e 01 	sts	0x010E, r23
+ 6fe:	80 93 0f 01 	sts	0x010F, r24
+ 702:	90 93 10 01 	sts	0x0110, r25
+	while (!canSend() && millis() - millis_current < RF69_CSMA_LIMIT_MS) receiveDone();
+ 706:	02 c0       	rjmp	.+4      	; 0x70c <_Z4sendhPKvhh+0x40>
+ 708:	0e 94 e0 01 	call	0x3c0	; 0x3c0 <_Z11receiveDonev>
+ 70c:	0e 94 a1 01 	call	0x342	; 0x342 <_Z7canSendv>
+ 710:	81 11       	cpse	r24, r1
+ 712:	15 c0       	rjmp	.+42     	; 0x73e <_Z4sendhPKvhh+0x72>
+ 714:	0e 94 81 00 	call	0x102	; 0x102 <_Z6millisv>
+ 718:	00 91 0d 01 	lds	r16, 0x010D
+ 71c:	10 91 0e 01 	lds	r17, 0x010E
+ 720:	20 91 0f 01 	lds	r18, 0x010F
+ 724:	30 91 10 01 	lds	r19, 0x0110
+ 728:	dc 01       	movw	r26, r24
+ 72a:	cb 01       	movw	r24, r22
+ 72c:	80 1b       	sub	r24, r16
+ 72e:	91 0b       	sbc	r25, r17
+ 730:	a2 0b       	sbc	r26, r18
+ 732:	b3 0b       	sbc	r27, r19
+ 734:	88 3e       	cpi	r24, 0xE8	; 232
+ 736:	93 40       	sbci	r25, 0x03	; 3
+ 738:	a1 05       	cpc	r26, r1
+ 73a:	b1 05       	cpc	r27, r1
+ 73c:	28 f3       	brcs	.-54     	; 0x708 <_Z4sendhPKvhh+0x3c>
+	sendFrame(toAddress, buffer, bufferSize, requestACK, 0);
+ 73e:	00 e0       	ldi	r16, 0x00	; 0
+ 740:	2d 2d       	mov	r18, r13
+ 742:	4e 2d       	mov	r20, r14
+ 744:	be 01       	movw	r22, r28
+ 746:	8f 2d       	mov	r24, r15
+ 748:	0e 94 f1 02 	call	0x5e2	; 0x5e2 <_Z9sendFramehPKvhhh>
+}
+ 74c:	df 91       	pop	r29
+ 74e:	cf 91       	pop	r28
+ 750:	1f 91       	pop	r17
+ 752:	0f 91       	pop	r16
+ 754:	ff 90       	pop	r15
+ 756:	ef 90       	pop	r14
+ 758:	df 90       	pop	r13
+ 75a:	08 95       	ret
+
+0000075c <__vector_6>:
+{
+	SS_PORT |= 1<<SS_PIN;
+	maybeInterrupts();
+}
+
+ISR(INT5_vect) {
+ 75c:	1f 92       	push	r1
+ 75e:	0f 92       	push	r0
+ 760:	0f b6       	in	r0, 0x3f	; 63
+ 762:	0f 92       	push	r0
+ 764:	11 24       	eor	r1, r1
+ 766:	0f 93       	push	r16
+ 768:	1f 93       	push	r17
+ 76a:	2f 93       	push	r18
+ 76c:	3f 93       	push	r19
+ 76e:	4f 93       	push	r20
+ 770:	5f 93       	push	r21
+ 772:	6f 93       	push	r22
+ 774:	7f 93       	push	r23
+ 776:	8f 93       	push	r24
+ 778:	9f 93       	push	r25
+ 77a:	af 93       	push	r26
+ 77c:	bf 93       	push	r27
+ 77e:	cf 93       	push	r28
+ 780:	ef 93       	push	r30
+ 782:	ff 93       	push	r31
+	inISR = 1;
+ 784:	81 e0       	ldi	r24, 0x01	; 1
+ 786:	80 93 0c 01 	sts	0x010C, r24
+	if (mode == RF69_MODE_RX && (readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PAYLOADREADY))
+ 78a:	80 91 02 01 	lds	r24, 0x0102
+ 78e:	83 30       	cpi	r24, 0x03	; 3
+ 790:	09 f0       	breq	.+2      	; 0x794 <__vector_6+0x38>
+ 792:	75 c0       	rjmp	.+234    	; 0x87e <__vector_6+0x122>
+ 794:	88 e2       	ldi	r24, 0x28	; 40
+ 796:	0e 94 be 00 	call	0x17c	; 0x17c <_Z7readRegh>
+ 79a:	82 ff       	sbrs	r24, 2
+ 79c:	70 c0       	rjmp	.+224    	; 0x87e <__vector_6+0x122>
+	{
+		PORTC |= 1<<PC6;
+ 79e:	ae 9a       	sbi	0x15, 6	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 7a0:	8f e1       	ldi	r24, 0x1F	; 31
+ 7a2:	9e e4       	ldi	r25, 0x4E	; 78
+ 7a4:	01 97       	sbiw	r24, 0x01	; 1
+ 7a6:	f1 f7       	brne	.-4      	; 0x7a4 <__vector_6+0x48>
+ 7a8:	00 c0       	rjmp	.+0      	; 0x7aa <__vector_6+0x4e>
+ 7aa:	00 00       	nop
+		_delay_ms(10);
+		PORTC &= ~(1<<PC6);
+ 7ac:	ae 98       	cbi	0x15, 6	; 21
+
+		setMode(RF69_MODE_STANDBY);
+ 7ae:	81 e0       	ldi	r24, 0x01	; 1
+ 7b0:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+		select();
+ 7b4:	0e 94 b7 00 	call	0x16e	; 0x16e <_Z6selectv>
+		spi_fast_shift(REG_FIFO & 0x7F);
+ 7b8:	80 e0       	ldi	r24, 0x00	; 0
+ 7ba:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+		PAYLOADLEN = spi_fast_shift(0);
+ 7be:	80 e0       	ldi	r24, 0x00	; 0
+ 7c0:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 7c4:	80 93 17 01 	sts	0x0117, r24
+		if(PAYLOADLEN>66) PAYLOADLEN=66;
+ 7c8:	80 91 17 01 	lds	r24, 0x0117
+ 7cc:	83 34       	cpi	r24, 0x43	; 67
+ 7ce:	18 f0       	brcs	.+6      	; 0x7d6 <__vector_6+0x7a>
+ 7d0:	82 e4       	ldi	r24, 0x42	; 66
+ 7d2:	80 93 17 01 	sts	0x0117, r24
+		TARGETID = spi_fast_shift(0);
+ 7d6:	80 e0       	ldi	r24, 0x00	; 0
+ 7d8:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 7dc:	80 93 18 01 	sts	0x0118, r24
+		if(!(promiscuousMode || TARGETID == address || TARGETID == RF69_BROADCAST_ADDR) // match this node's address, or broadcast address or anything in promiscuous mode
+		|| PAYLOADLEN < 3) // address situation could receive packets that are malformed and don't fit this libraries extra fields
+ 7e0:	80 91 11 01 	lds	r24, 0x0111
+ 7e4:	81 11       	cpse	r24, r1
+ 7e6:	0a c0       	rjmp	.+20     	; 0x7fc <__vector_6+0xa0>
+		select();
+		spi_fast_shift(REG_FIFO & 0x7F);
+		PAYLOADLEN = spi_fast_shift(0);
+		if(PAYLOADLEN>66) PAYLOADLEN=66;
+		TARGETID = spi_fast_shift(0);
+		if(!(promiscuousMode || TARGETID == address || TARGETID == RF69_BROADCAST_ADDR) // match this node's address, or broadcast address or anything in promiscuous mode
+ 7e8:	90 91 18 01 	lds	r25, 0x0118
+ 7ec:	80 91 12 01 	lds	r24, 0x0112
+ 7f0:	98 17       	cp	r25, r24
+ 7f2:	21 f0       	breq	.+8      	; 0x7fc <__vector_6+0xa0>
+ 7f4:	80 91 18 01 	lds	r24, 0x0118
+ 7f8:	8f 3f       	cpi	r24, 0xFF	; 255
+ 7fa:	21 f4       	brne	.+8      	; 0x804 <__vector_6+0xa8>
+		|| PAYLOADLEN < 3) // address situation could receive packets that are malformed and don't fit this libraries extra fields
+ 7fc:	80 91 17 01 	lds	r24, 0x0117
+		select();
+		spi_fast_shift(REG_FIFO & 0x7F);
+		PAYLOADLEN = spi_fast_shift(0);
+		if(PAYLOADLEN>66) PAYLOADLEN=66;
+		TARGETID = spi_fast_shift(0);
+		if(!(promiscuousMode || TARGETID == address || TARGETID == RF69_BROADCAST_ADDR) // match this node's address, or broadcast address or anything in promiscuous mode
+ 800:	83 30       	cpi	r24, 0x03	; 3
+ 802:	38 f4       	brcc	.+14     	; 0x812 <__vector_6+0xb6>
+		|| PAYLOADLEN < 3) // address situation could receive packets that are malformed and don't fit this libraries extra fields
+		{
+			PAYLOADLEN = 0;
+ 804:	10 92 17 01 	sts	0x0117, r1
+			unselect();
+ 808:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+			receiveBegin();
+ 80c:	0e 94 bb 01 	call	0x376	; 0x376 <_Z12receiveBeginv>
+			return;
+ 810:	3f c0       	rjmp	.+126    	; 0x890 <__vector_6+0x134>
+		}
+
+		DATALEN = PAYLOADLEN - 3;
+ 812:	80 91 17 01 	lds	r24, 0x0117
+ 816:	83 50       	subi	r24, 0x03	; 3
+ 818:	80 93 1a 01 	sts	0x011A, r24
+		SENDERID = spi_fast_shift(0);
+ 81c:	80 e0       	ldi	r24, 0x00	; 0
+ 81e:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 822:	80 93 19 01 	sts	0x0119, r24
+		uint8_t CTLbyte = spi_fast_shift(0);
+ 826:	80 e0       	ldi	r24, 0x00	; 0
+ 828:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+
+		ACK_RECEIVED = CTLbyte & RFM69_CTL_SENDACK; // extract ACK-received flag
+ 82c:	98 2f       	mov	r25, r24
+ 82e:	90 78       	andi	r25, 0x80	; 128
+ 830:	90 93 15 01 	sts	0x0115, r25
+		ACK_REQUESTED = CTLbyte & RFM69_CTL_REQACK; // extract ACK-requested flag
+ 834:	80 74       	andi	r24, 0x40	; 64
+ 836:	80 93 16 01 	sts	0x0116, r24
+		
+		//interruptHook(CTLbyte);     // TWS: hook to derived class interrupt function
+
+		for (uint8_t i = 0; i < DATALEN; i++)
+ 83a:	80 91 1a 01 	lds	r24, 0x011A
+ 83e:	88 23       	and	r24, r24
+ 840:	79 f0       	breq	.+30     	; 0x860 <__vector_6+0x104>
+ 842:	c0 e0       	ldi	r28, 0x00	; 0
+		{
+			DATA[i] = spi_fast_shift(0);
+ 844:	0c 2f       	mov	r16, r28
+ 846:	10 e0       	ldi	r17, 0x00	; 0
+ 848:	80 e0       	ldi	r24, 0x00	; 0
+ 84a:	0e 94 70 00 	call	0xe0	; 0xe0 <_Z14spi_fast_shifth>
+ 84e:	f8 01       	movw	r30, r16
+ 850:	e5 5e       	subi	r30, 0xE5	; 229
+ 852:	fe 4f       	sbci	r31, 0xFE	; 254
+ 854:	80 83       	st	Z, r24
+		ACK_RECEIVED = CTLbyte & RFM69_CTL_SENDACK; // extract ACK-received flag
+		ACK_REQUESTED = CTLbyte & RFM69_CTL_REQACK; // extract ACK-requested flag
+		
+		//interruptHook(CTLbyte);     // TWS: hook to derived class interrupt function
+
+		for (uint8_t i = 0; i < DATALEN; i++)
+ 856:	cf 5f       	subi	r28, 0xFF	; 255
+ 858:	80 91 1a 01 	lds	r24, 0x011A
+ 85c:	c8 17       	cp	r28, r24
+ 85e:	90 f3       	brcs	.-28     	; 0x844 <__vector_6+0xe8>
+		{
+			DATA[i] = spi_fast_shift(0);
+		}
+		if (DATALEN < RF69_MAX_DATA_LEN) DATA[DATALEN] = 0; // add null at end of string
+ 860:	80 91 1a 01 	lds	r24, 0x011A
+ 864:	8d 33       	cpi	r24, 0x3D	; 61
+ 866:	30 f4       	brcc	.+12     	; 0x874 <__vector_6+0x118>
+ 868:	e0 91 1a 01 	lds	r30, 0x011A
+ 86c:	f0 e0       	ldi	r31, 0x00	; 0
+ 86e:	e5 5e       	subi	r30, 0xE5	; 229
+ 870:	fe 4f       	sbci	r31, 0xFE	; 254
+ 872:	10 82       	st	Z, r1
+		unselect();
+ 874:	0e 94 ba 00 	call	0x174	; 0x174 <_Z8unselectv>
+		setMode(RF69_MODE_RX);
+ 878:	83 e0       	ldi	r24, 0x03	; 3
+ 87a:	0e 94 11 01 	call	0x222	; 0x222 <_Z7setModeh>
+	}
+	RSSI = readRSSI();
+ 87e:	80 e0       	ldi	r24, 0x00	; 0
+ 880:	0e 94 8c 01 	call	0x318	; 0x318 <_Z8readRSSIh>
+ 884:	90 93 14 01 	sts	0x0114, r25
+ 888:	80 93 13 01 	sts	0x0113, r24
+	inISR = 0;
+ 88c:	10 92 0c 01 	sts	0x010C, r1
+ 890:	ff 91       	pop	r31
+ 892:	ef 91       	pop	r30
+ 894:	cf 91       	pop	r28
+ 896:	bf 91       	pop	r27
+ 898:	af 91       	pop	r26
+ 89a:	9f 91       	pop	r25
+ 89c:	8f 91       	pop	r24
+ 89e:	7f 91       	pop	r23
+ 8a0:	6f 91       	pop	r22
+ 8a2:	5f 91       	pop	r21
+ 8a4:	4f 91       	pop	r20
+ 8a6:	3f 91       	pop	r19
+ 8a8:	2f 91       	pop	r18
+ 8aa:	1f 91       	pop	r17
+ 8ac:	0f 91       	pop	r16
+ 8ae:	0f 90       	pop	r0
+ 8b0:	0f be       	out	0x3f, r0	; 63
+ 8b2:	0f 90       	pop	r0
+ 8b4:	1f 90       	pop	r1
+ 8b6:	18 95       	reti
+
+000008b8 <main>:
+
+
+int main(void)
+{
+	// initialize RFM69
+	rfm69_init(NODEID,NETWORKID);
+ 8b8:	61 e2       	ldi	r22, 0x21	; 33
+ 8ba:	83 e0       	ldi	r24, 0x03	; 3
+ 8bc:	0e 94 24 02 	call	0x448	; 0x448 <_Z10rfm69_inithh>
+	setHighPower(1); // if model number rfm69hw; last two char have hw.
+ 8c0:	81 e0       	ldi	r24, 0x01	; 1
+ 8c2:	0e 94 70 01 	call	0x2e0	; 0x2e0 <_Z12setHighPowerh>
+	setPowerLevel(30); // 0-31; 5dBm to 20 dBm
+ 8c6:	8e e1       	ldi	r24, 0x1E	; 30
+ 8c8:	0e 94 eb 00 	call	0x1d6	; 0x1d6 <_Z13setPowerLevelh>
+	encrypt(NULL); // if set it has to be 16 bytes. example: "1234567890123456"
+ 8cc:	80 e0       	ldi	r24, 0x00	; 0
+ 8ce:	90 e0       	ldi	r25, 0x00	; 0
+ 8d0:	0e 94 fb 01 	call	0x3f6	; 0x3f6 <_Z7encryptPKc>
+	
+    while (1) 
+    {
+		send(TONODEID,"Awesome!",8,0); // (toNodeId,buffer,bufferSize,requestACK?)
+ 8d4:	20 e0       	ldi	r18, 0x00	; 0
+ 8d6:	48 e0       	ldi	r20, 0x08	; 8
+ 8d8:	63 e0       	ldi	r22, 0x03	; 3
+ 8da:	71 e0       	ldi	r23, 0x01	; 1
+ 8dc:	84 e0       	ldi	r24, 0x04	; 4
+ 8de:	0e 94 66 03 	call	0x6cc	; 0x6cc <_Z4sendhPKvhh>
+ 8e2:	2f ef       	ldi	r18, 0xFF	; 255
+ 8e4:	83 ed       	ldi	r24, 0xD3	; 211
+ 8e6:	90 e3       	ldi	r25, 0x30	; 48
+ 8e8:	21 50       	subi	r18, 0x01	; 1
+ 8ea:	80 40       	sbci	r24, 0x00	; 0
+ 8ec:	90 40       	sbci	r25, 0x00	; 0
+ 8ee:	e1 f7       	brne	.-8      	; 0x8e8 <main+0x30>
+ 8f0:	00 c0       	rjmp	.+0      	; 0x8f2 <main+0x3a>
+ 8f2:	00 00       	nop
+ 8f4:	ef cf       	rjmp	.-34     	; 0x8d4 <main+0x1c>
+
+000008f6 <_exit>:
+ 8f6:	f8 94       	cli
+
+000008f8 <__stop_program>:
+ 8f8:	ff cf       	rjmp	.-2      	; 0x8f8 <__stop_program>
