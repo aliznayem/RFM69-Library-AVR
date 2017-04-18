@@ -12,7 +12,7 @@
 // (at your option) any later version.                    
 //                                                        
 // This program is distributed in the hope that it will   
-// be useful, but WITHOUT ANY WARRANTY; without even the  
+// be useful, but WITHOUT ANY WARRANTY; without even the 
 // implied warranty of MERCHANTABILITY or FITNESS FOR A   
 // PARTICULAR PURPOSE. See the GNU General Public        
 // License for more details.                              
@@ -25,14 +25,15 @@
 // **********************************************************************************
 
 // **********************************************************************************
-// ported in C by Zulkar Nayem, 2ra Technology Ltd. <nayem.cosmic@gmail.com>
+// Ported in C by Zulkar Nayem <nayem.cosmic@gmail.com>
 // MOSI, MISO, SS, DIO0 connection needed.
-// In atmega64:
+// I have written this code for atmega64.
+// I/O pin connection:
 // MOSI -> PB2
 // MISO -> PB3
 // SS -> PB0
-// DIO0 -> PE5 that is INT5, an interrupt pin. Need change in line 184,185,534 if you change this pin.
-// You have to change line 60 with the change of clock speed
+// DIO0 -> PE5 that is INT5, an interrupt pin. Need change in line 184,185,534 if you want to change this pin.
+// You have to change line 60 with the change of clock speed.
 // **********************************************************************************
 
 #include <avr/interrupt.h>
@@ -59,7 +60,6 @@
 #define RF69_CSMA_LIMIT_MS 1000
 #define RF69_TX_LIMIT_MS   1000
 #define RF69_FSTEP  15.2587890625 // == FXOSC / 2^19 = 8MHz / 2^19 (p13 in datasheet) 
-// TWS: define CTLbyte bits
 #define RFM69_CTL_SENDACK   0x80
 #define RFM69_CTL_REQACK    0x40
 
@@ -77,13 +77,13 @@ uint8_t address; //nodeID
 uint8_t powerLevel = 31;
 uint8_t promiscuousMode = 0;
 unsigned long millis_current;
-volatile uint8_t inISR = 0; 
+volatile uint8_t inISR = 0;
     
 
 void rfm69_init(uint8_t ID, uint8_t networkID=33);
 void setAddress(uint8_t addr);
 void setNetwork(uint8_t networkID);
-//uint8_t canSend();
+uint8_t canSend();
 void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK=0);
 uint8_t sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime);
 uint8_t ACKRequested();
@@ -251,7 +251,6 @@ void sendACK(const void* buffer, uint8_t bufferSize)
 // this function implements 2 modes as follows:
 //       - for RFM69W the range is from 0-31 [-18dBm to 13dBm] (PA0 only on RFIO pin)
 //       - for RFM69HW the range is from 0-31 [5dBm to 20dBm]  (PA1 & PA2 on PA_BOOST pin & high Power PA settings - see section 3.3.7 in datasheet, p22)
-
 void setPowerLevel(uint8_t powerLevel)
 {
 	uint8_t _powerLevel = powerLevel;
@@ -296,6 +295,7 @@ void setFrequency(uint32_t freqHz)
 	setMode(oldMode);
 }
 
+// read register value
 uint8_t readReg(uint8_t addr)
 {
     select();
@@ -305,6 +305,7 @@ uint8_t readReg(uint8_t addr)
 	return regval;
 }
 
+// write register value
 void writeReg(uint8_t addr, uint8_t value)
 {
 	select();
@@ -331,6 +332,7 @@ void encrypt(const char* key)
 	    writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | 0x00);	
 }
 
+// Transmit or Receive or Standby or Sleep
 void setMode(uint8_t newMode)
 {
 	if (newMode == mode)

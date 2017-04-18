@@ -3,6 +3,7 @@
  *
  * Created: 4/17/2017 11:43:37 AM
  * Author : Zulkar Nayem
+ * code is written in Atmel Studio 7.0
  */ 
 #define F_CPU 8000000
 
