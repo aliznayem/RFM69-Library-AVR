@@ -36,7 +36,6 @@ int main(void)
     {
 		if(receiveDone())
 		{
-			_delay_ms(10);
 			if(ACKRequested())
 				sendACK();
 			char stringData[16];
