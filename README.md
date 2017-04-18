@@ -1,5 +1,5 @@
 # RFM69-Library-AVR
-Original library written for arduino by https://github.com/LowPowerLab/RFM69. This library is ported in C for AVR.
+Original libraryis written for arduino by https://github.com/LowPowerLab/RFM69. This library is C ported version for AVR.
 
 I/O pin connections:
 RF Module ----------- Microcontroller
