@@ -3,8 +3,12 @@ Original library is written for arduino by https://github.com/LowPowerLab/RFM69.
 
 I/O pin connections:
 RF Module ----------- Microcontroller
+
 MOSI           ->          MOSI
 MISO           ->          MISO
+
 SCK            ->          SCK
+
 SS             ->          SS
+
 DIO0           ->  any interrupt enabled pin
