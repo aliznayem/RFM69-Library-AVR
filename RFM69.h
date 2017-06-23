@@ -514,7 +514,10 @@ void receiveBegin() {
 // false = enable node/broadcast filtering to capture only frames sent to this/broadcast address
 void promiscuous(uint8_t onOff) {
 	promiscuousMode = onOff;
-	//writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | (onOff ? RF_PACKET1_ADRSFILTERING_OFF : RF_PACKET1_ADRSFILTERING_NODEBROADCAST));
+	if(promiscuousMode==0)
+		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_NODEBROADCAST);
+	else
+		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_OFF);
 }
 
 void maybeInterrupts()
