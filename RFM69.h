@@ -31,7 +31,7 @@
 // I/O pin connection:
 // MOSI -> PB2
 // MISO -> PB3
-// SS -> PB0
+// SS   -> PB0
 // DIO0 -> PE5 that is INT5, an interrupt pin. Need change in line 184,185,534 if you want to change this pin.
 // You have to change line 60 with the change of clock speed.
 // **********************************************************************************
