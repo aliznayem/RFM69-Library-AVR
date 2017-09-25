@@ -12,7 +12,7 @@
 // (at your option) any later version.                    
 //                                                        
 // This program is distributed in the hope that it will   
-// be useful, but WITHOUT ANY WARRANTY; without even the 
+// be useful, but WITHOUT ANY WARRANTY; without even the  
 // implied warranty of MERCHANTABILITY or FITNESS FOR A   
 // PARTICULAR PURPOSE. See the GNU General Public        
 // License for more details.                              
@@ -24,18 +24,18 @@
 // and copyright notices in any redistribution of this code
 // **********************************************************************************
 
-// **********************************************************************************
-// Ported in C by Zulkar Nayem <nayem.cosmic@gmail.com>
+
+// ported in C and converted to avr environment by Zulkar Nayem, 2ra Technology Ltd.
 // MOSI, MISO, SS, DIO0 connection needed.
-// I have written this code for atmega64.
-// I/O pin connection:
+// microcontroller : atmega64
+// default pins:
 // MOSI -> PB2
 // MISO -> PB3
-// SS   -> PB0
-// DIO0 -> PE5 that is INT5, an interrupt pin. Need change in line 184,185,534 if you want to change this pin.
-// You have to change line 60 with the change of clock speed.
-// **********************************************************************************
+// SS -> PB0
+// DIO0 -> PE5 that is INT5, an interrupt pin
 
+
+// must include spi.h library
 #include <avr/interrupt.h>
 #include "spi.h"
 #include "RFM69registers.h"
@@ -44,9 +44,15 @@
 #define SS_DDR                DDRB
 #define SS_PORT              PORTB
 #define SS_PIN                 PB0
+
 #define INT_DDR               DDRE
 #define INT_PORT             PORTE
 #define INT_PIN                PE5
+#define INTn                  INT5
+#define ISCn0                ISC50
+#define ISCn1                ISC51
+#define INT_VECT         INT5_vect
+
 #define RF69_MAX_DATA_LEN       61 // to take advantage of the built in AES/CRC we want to limit the frame size to the internal FIFO size (66 bytes - 3 bytes overhead - 2 bytes crc)
 #define CSMA_LIMIT              -90 // upper RX signal sensitivity threshold in dBm for carrier sense access
 #define RF69_MODE_SLEEP         0 // XTAL OFF
@@ -59,7 +65,8 @@
 #define RF69_BROADCAST_ADDR 255
 #define RF69_CSMA_LIMIT_MS 1000
 #define RF69_TX_LIMIT_MS   1000
-#define RF69_FSTEP  15.2587890625 // == FXOSC / 2^19 = 8MHz / 2^19 (p13 in datasheet) 
+#define RF69_FSTEP  61.035156 // == FXOSC / 2^19 = 32MHz / 2^19 (p13 in datasheet) FXOSC = module crystal oscillator frequency 
+// TWS: define CTLbyte bits
 #define RFM69_CTL_SENDACK   0x80
 #define RFM69_CTL_REQACK    0x40
 
@@ -77,10 +84,10 @@ uint8_t address; //nodeID
 uint8_t powerLevel = 31;
 uint8_t promiscuousMode = 0;
 unsigned long millis_current;
-volatile uint8_t inISR = 0;
+volatile uint8_t inISR = 0; 
     
 
-void rfm69_init(uint8_t ID, uint8_t networkID=33);
+void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID=33);
 void setAddress(uint8_t addr);
 void setNetwork(uint8_t networkID);
 uint8_t canSend();
@@ -109,8 +116,10 @@ void promiscuous(uint8_t onOff);
 void maybeInterrupts();
 void select();
 void unselect();
+uint8_t receiveDone();
 
-void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by default. Will work on it later. Have to change 0x07, 0x08, 0x09
+// freqBand must be selected from 315, 433, 868, 915
+void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
 {
 	const uint8_t CONFIG[][2] =
 	{
@@ -121,9 +130,14 @@ void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by defa
 		/* 0x05 */ { REG_FDEVMSB, RF_FDEVMSB_50000}, // default: 5KHz, (FDEV + BitRate / 2 <= 500KHz)
 		/* 0x06 */ { REG_FDEVLSB, RF_FDEVLSB_50000},
 
-		/* 0x07 */ { REG_FRFMSB, RF_FRFMSB_433},
-		/* 0x08 */ { REG_FRFMID, RF_FRFMID_433},
-		/* 0x09 */ { REG_FRFLSB, RF_FRFLSB_433},
+		//* 0x07 */ { REG_FRFMSB, RF_FRFMSB_433},
+		//* 0x08 */ { REG_FRFMID, RF_FRFMID_433},
+		//* 0x09 */ { REG_FRFLSB, RF_FRFLSB_433},
+		
+		/* 0x07 */ { REG_FRFMSB, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFMSB_315 : (freqBand==RF_433MHZ ? RF_FRFMSB_433 : (freqBand==RF_868MHZ ? RF_FRFMSB_868 : RF_FRFMSB_915))) },
+		/* 0x08 */ { REG_FRFMID, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFMID_315 : (freqBand==RF_433MHZ ? RF_FRFMID_433 : (freqBand==RF_868MHZ ? RF_FRFMID_868 : RF_FRFMID_915))) },
+		/* 0x09 */ { REG_FRFLSB, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFLSB_315 : (freqBand==RF_433MHZ ? RF_FRFLSB_433 : (freqBand==RF_868MHZ ? RF_FRFLSB_868 : RF_FRFLSB_915))) },
+
 
 		// looks like PA1 and PA2 are not implemented on RFM69W, hence the max output power is 13dBm
 		// +17dBm and +20dBm are possible on RFM69HW
@@ -182,8 +196,8 @@ void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by defa
 	setMode(RF69_MODE_STANDBY);
 	while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00);
 	
-	EICRB |= (1<<ISC51)|(1<<ISC50); // setting INT5 rising. details datasheet p91. must change with interrupt pin.
-	EIMSK |= 1<<INT5; // enable INT5
+	EICRB |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
+	EIMSK |= 1<<INTn; // enable INTn
     inISR = 0;
 	//sei(); //not needed because in millis_init() sei declared :)
 	millis_init(); // to get miliseconds
@@ -215,7 +229,6 @@ uint8_t canSend()
 	return 0;
 }
 
-// data send
 void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK)
 {
 	writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFB) | RF_PACKET2_RXRESTART); // avoid RX deadlocks
@@ -251,6 +264,7 @@ void sendACK(const void* buffer, uint8_t bufferSize)
 // this function implements 2 modes as follows:
 //       - for RFM69W the range is from 0-31 [-18dBm to 13dBm] (PA0 only on RFIO pin)
 //       - for RFM69HW the range is from 0-31 [5dBm to 20dBm]  (PA1 & PA2 on PA_BOOST pin & high Power PA settings - see section 3.3.7 in datasheet, p22)
+
 void setPowerLevel(uint8_t powerLevel)
 {
 	uint8_t _powerLevel = powerLevel;
@@ -295,7 +309,6 @@ void setFrequency(uint32_t freqHz)
 	setMode(oldMode);
 }
 
-// read register value
 uint8_t readReg(uint8_t addr)
 {
     select();
@@ -305,7 +318,6 @@ uint8_t readReg(uint8_t addr)
 	return regval;
 }
 
-// write register value
 void writeReg(uint8_t addr, uint8_t value)
 {
 	select();
@@ -332,7 +344,6 @@ void encrypt(const char* key)
 	    writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | 0x00);	
 }
 
-// Transmit or Receive or Standby or Sleep
 void setMode(uint8_t newMode)
 {
 	if (newMode == mode)
@@ -517,7 +528,7 @@ void promiscuous(uint8_t onOff) {
 	if(promiscuousMode==0)
 		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_NODEBROADCAST);
 	else
-		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_OFF);
+		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_OFF);	
 }
 
 void maybeInterrupts()
@@ -538,7 +549,7 @@ void unselect()
 	maybeInterrupts();
 }
 
-ISR(INT5_vect) {
+ISR(INT_VECT) {
 	inISR = 1;
 	if (mode == RF69_MODE_RX && (readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PAYLOADREADY))
 	{
@@ -563,6 +574,8 @@ ISR(INT5_vect) {
 
 		ACK_RECEIVED = CTLbyte & RFM69_CTL_SENDACK; // extract ACK-received flag
 		ACK_REQUESTED = CTLbyte & RFM69_CTL_REQACK; // extract ACK-requested flag
+		
+		//interruptHook(CTLbyte);     // TWS: hook to derived class interrupt function
 
 		for (uint8_t i = 0; i < DATALEN; i++)
 		{

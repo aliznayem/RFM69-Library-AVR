@@ -289,6 +289,11 @@
 #define RF_FDEVMSB_300000           0x13
 #define RF_FDEVLSB_300000           0x33
 
+// frequency bands
+#define RF_315MHZ                315
+#define RF_433MHZ                433
+#define RF_868MHZ                868
+#define RF_915MHZ                915
 
 // RegFrf (MHz) - carrier frequency
 // 315Mhz band

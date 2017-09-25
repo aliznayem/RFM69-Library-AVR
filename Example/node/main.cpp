@@ -3,7 +3,6 @@
  *
  * Created: 4/17/2017 12:05:29 PM
  * Author : Zulkar Nayem
- * Code is written in Atmel Studio 7.0
  */ 
 #define F_CPU 8000000
 
@@ -22,7 +21,7 @@
 int main(void)
 {
 	// initialize RFM69
-	rfm69_init(NODEID,NETWORKID);
+	rfm69_init(433,NODEID,NETWORKID);
 	setHighPower(1); // if model number rfm69hw
 	setPowerLevel(30); // 0-31; 5dBm to 20 dBm
 	encrypt(NULL); // if set it has to be 16 bytes. example: "1234567890123456"

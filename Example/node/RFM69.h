@@ -24,27 +24,35 @@
 // and copyright notices in any redistribution of this code
 // **********************************************************************************
 
-// **********************************************************************************
-// ported in C by Zulkar Nayem, 2ra Technology Ltd.
+
+// ported in C and converted to avr environment by Zulkar Nayem, 2ra Technology Ltd.
 // MOSI, MISO, SS, DIO0 connection needed.
-// In my case : atmega64
+// microcontroller : atmega64
+// default pins:
 // MOSI -> PB2
 // MISO -> PB3
 // SS -> PB0
-// DIO0 -> PE5 that is INT5, an interrupt pin. Need change in line 184,185,534 if you change this pin.
-// **********************************************************************************
+// DIO0 -> PE5 that is INT5, an interrupt pin
 
+
+// must include spi.h library
+#include <avr/interrupt.h>
 #include "spi.h"
 #include "RFM69registers.h"
 #include "get_millis.h"
-#include <avr/interrupt.h>
 
 #define SS_DDR                DDRB
 #define SS_PORT              PORTB
 #define SS_PIN                 PB0
+
 #define INT_DDR               DDRE
 #define INT_PORT             PORTE
 #define INT_PIN                PE5
+#define INTn                  INT5
+#define ISCn0                ISC50
+#define ISCn1                ISC51
+#define INT_VECT         INT5_vect
+
 #define RF69_MAX_DATA_LEN       61 // to take advantage of the built in AES/CRC we want to limit the frame size to the internal FIFO size (66 bytes - 3 bytes overhead - 2 bytes crc)
 #define CSMA_LIMIT              -90 // upper RX signal sensitivity threshold in dBm for carrier sense access
 #define RF69_MODE_SLEEP         0 // XTAL OFF
@@ -57,7 +65,7 @@
 #define RF69_BROADCAST_ADDR 255
 #define RF69_CSMA_LIMIT_MS 1000
 #define RF69_TX_LIMIT_MS   1000
-#define RF69_FSTEP  15.2587890625 // == FXOSC / 2^19 = 8MHz / 2^19 (p13 in datasheet) 
+#define RF69_FSTEP  61.035156 // == FXOSC / 2^19 = 32MHz / 2^19 (p13 in datasheet) FXOSC = module crystal oscillator frequency 
 // TWS: define CTLbyte bits
 #define RFM69_CTL_SENDACK   0x80
 #define RFM69_CTL_REQACK    0x40
@@ -79,10 +87,10 @@ unsigned long millis_current;
 volatile uint8_t inISR = 0; 
     
 
-void rfm69_init(uint8_t ID, uint8_t networkID=33);
+void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID=33);
 void setAddress(uint8_t addr);
 void setNetwork(uint8_t networkID);
-//uint8_t canSend();
+uint8_t canSend();
 void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK=0);
 uint8_t sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime);
 uint8_t ACKRequested();
@@ -109,7 +117,8 @@ void maybeInterrupts();
 void select();
 void unselect();
 
-void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by default. Will work on it later. Have to change 0x07, 0x08, 0x09
+// freqBand must be selected from 315, 433, 868, 915
+void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
 {
 	const uint8_t CONFIG[][2] =
 	{
@@ -120,9 +129,14 @@ void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by defa
 		/* 0x05 */ { REG_FDEVMSB, RF_FDEVMSB_50000}, // default: 5KHz, (FDEV + BitRate / 2 <= 500KHz)
 		/* 0x06 */ { REG_FDEVLSB, RF_FDEVLSB_50000},
 
-		/* 0x07 */ { REG_FRFMSB, RF_FRFMSB_433},
-		/* 0x08 */ { REG_FRFMID, RF_FRFMID_433},
-		/* 0x09 */ { REG_FRFLSB, RF_FRFLSB_433},
+		//* 0x07 */ { REG_FRFMSB, RF_FRFMSB_433},
+		//* 0x08 */ { REG_FRFMID, RF_FRFMID_433},
+		//* 0x09 */ { REG_FRFLSB, RF_FRFLSB_433},
+		
+		/* 0x07 */ { REG_FRFMSB, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFMSB_315 : (freqBand==RF_433MHZ ? RF_FRFMSB_433 : (freqBand==RF_868MHZ ? RF_FRFMSB_868 : RF_FRFMSB_915))) },
+		/* 0x08 */ { REG_FRFMID, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFMID_315 : (freqBand==RF_433MHZ ? RF_FRFMID_433 : (freqBand==RF_868MHZ ? RF_FRFMID_868 : RF_FRFMID_915))) },
+		/* 0x09 */ { REG_FRFLSB, (uint8_t) (freqBand==RF_315MHZ ? RF_FRFLSB_315 : (freqBand==RF_433MHZ ? RF_FRFLSB_433 : (freqBand==RF_868MHZ ? RF_FRFLSB_868 : RF_FRFLSB_915))) },
+
 
 		// looks like PA1 and PA2 are not implemented on RFM69W, hence the max output power is 13dBm
 		// +17dBm and +20dBm are possible on RFM69HW
@@ -154,7 +168,7 @@ void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by defa
 	};
     
 	spi_init(); // spi init
-	DDRC |= 1<<PC6; // temporary for testing. LED output
+	//DDRC |= 1<<PC6; // temporary for testing. LED output
 	SS_DDR |= 1<<SS_PIN; // setting SS as output
 	SS_PORT |= 1<<SS_PIN; // setting slave select high
 	INT_DDR &= ~(1<<INT_PIN); // setting interrupt pin input. no problem if not given
@@ -181,8 +195,8 @@ void rfm69_init(uint8_t nodeID, uint8_t networkID) //frequency is 433MHz by defa
 	setMode(RF69_MODE_STANDBY);
 	while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00);
 	
-	EICRB |= (1<<ISC51)|(1<<ISC50); // setting INT5 rising. details datasheet p91. must change with interrupt pin.
-	EIMSK |= 1<<INT5; // enable INT5
+	EICRB |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
+	EIMSK |= 1<<INTn; // enable INTn
     inISR = 0;
 	//sei(); //not needed because in millis_init() sei declared :)
 	millis_init(); // to get miliseconds
@@ -510,7 +524,10 @@ void receiveBegin() {
 // false = enable node/broadcast filtering to capture only frames sent to this/broadcast address
 void promiscuous(uint8_t onOff) {
 	promiscuousMode = onOff;
-	//writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | (onOff ? RF_PACKET1_ADRSFILTERING_OFF : RF_PACKET1_ADRSFILTERING_NODEBROADCAST));
+	if(promiscuousMode==0)
+		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_NODEBROADCAST);
+	else
+		writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_OFF);	
 }
 
 void maybeInterrupts()
@@ -531,14 +548,10 @@ void unselect()
 	maybeInterrupts();
 }
 
-ISR(INT5_vect) {
+ISR(INT_VECT) {
 	inISR = 1;
 	if (mode == RF69_MODE_RX && (readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PAYLOADREADY))
 	{
-		PORTC |= 1<<PC6;
-		_delay_ms(10);
-		PORTC &= ~(1<<PC6);
-
 		setMode(RF69_MODE_STANDBY);
 		select();
 		spi_fast_shift(REG_FIFO & 0x7F);

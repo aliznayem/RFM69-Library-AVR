@@ -30,8 +30,8 @@
 //define pin number. In this case atmega64
 #define MISO 3
 #define MOSI 2
-#define SCK  1
-#define SS   0
+#define SCK 1
+#define SS 0
 
 void spi_init()
 // Initialize pins for spi communication
