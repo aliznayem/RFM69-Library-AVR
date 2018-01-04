@@ -40,18 +40,16 @@ Original library was written in C++ in arduino environment. I converted this lib
 ## Basic Operation Flow: ##
 #### Transmit data: #### 
 
-1.	include rfm69.h
-2.	rfm69_init(freq, nodeID, networkID);
-3.	setHighPower(0 or 1);
-4.	setPowerLevel(0~31);
-5.	mainloop
+1.	rfm69_init(freq, nodeID, networkID);
+2.	setHighPower(0 or 1);
+3.	setPowerLevel(0~31);
+4.	mainloop
 a.	send(toNodeID, buffer, bufferLen, 0 or 1 )
 #### Receive data: #### 
-1.	include rfm69.h
-2.	rfm69_init(freq, nodeID, networkID);
-3.	setHighPower(0 or 1);
-4.	setPowerLevel(0~31);
-5.	mainloop
+1.	rfm69_init(freq, nodeID, networkID);
+2.	setHighPower(0 or 1);
+3.	setPowerLevel(0~31);
+4.	mainloop
 a.	if(receiveDone())
 i.	if(ACKRequested()){sendACK()}
 ii.	process DATA buffer
