@@ -1,5 +1,5 @@
 # RFM69-Library-AVR #
-Original library is written for arduino by https://github.com/LowPowerLab/RFM69. This is C ported version for AVR microcontrollers.
+Original library is written for arduino by [LowPowerLab](https://github.com/LowPowerLab/RFM69). This is C ported version for AVR microcontrollers.
 
 ## I/O pin connections: ##
 
@@ -39,13 +39,20 @@ DIO0	->	any interrupt enabled pin
 
 ## Basic Operation Flow: ##
 #### Transmit data: #### 
-
-1.	rfm69_init(freq, nodeID, networkID);
-2.	setHighPower(0 or 1);
-3.	setPowerLevel(0~31);
-4.	send(toNodeID, buffer, bufferLen, 0 or 1 )
-#### Receive data: #### 
-1.	rfm69_init(freq, nodeID, networkID);
-2.	setHighPower(0 or 1);
-3.	setPowerLevel(0~31);
-4.	mainloop >> if(receiveDone()) >> if(ACKRequested()){sendACK()} and extract received data from DATA buffer
+'''
+rfm69_init(freq, nodeID, networkID);
+setHighPower(0 or 1);
+setPowerLevel(0~31);
+send(toNodeID, buffer, bufferLen, 0 or 1 )
+'''
+#### Receive data: ####
+'''
+rfm69_init(freq, nodeID, networkID);
+setHighPower(0 or 1);
+setPowerLevel(0~31);
+mainloop
+  if(receiveDone())
+    if(ACKRequested())
+      sendACK()
+     extract received data from DATA buffer
+'''
