@@ -26,7 +26,7 @@
 
 
 // **********************************************************************************
-// converted to avr environment by Zulkar Nayem, 2ra Technology Ltd.
+// converted to avr environment by Zulkar Nayem
 
 // microcontroller : atmega64
 // default pins:
