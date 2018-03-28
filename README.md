@@ -48,4 +48,4 @@ DIO0	->	any interrupt enabled pin
 1.	rfm69_init(freq, nodeID, networkID);
 2.	setHighPower(0 or 1);
 3.	setPowerLevel(0~31);
-4.	mainloop >> if(receiveDone()) >> if(ACKRequested()){sendACK()} and process DATA buffer
+4.	mainloop >> if(receiveDone()) >> if(ACKRequested()){sendACK()} and extract received data from DATA buffer
