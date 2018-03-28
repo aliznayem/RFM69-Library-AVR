@@ -33,7 +33,7 @@
 // MOSI -> PB2
 // MISO -> PB3
 // SS -> PB0
-// DIO0 -> PE5 that is INT5, an interrupt pin
+// DIO0 -> PE5 that is INT5, an interrupt enabled pin
 // **********************************************************************************
 
 
