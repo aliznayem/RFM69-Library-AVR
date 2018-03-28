@@ -1,5 +1,3 @@
-//Written by Stefan Engelke
-
 /*
     Copyright (c) 2007 Stefan Engelke <mbox@stefanengelke.de>
 
