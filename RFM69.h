@@ -25,14 +25,16 @@
 // **********************************************************************************
 
 
-// ported in C and converted to avr environment by Zulkar Nayem, 2ra Technology Ltd.
-// MOSI, MISO, SS, DIO0 connection needed.
+// **********************************************************************************
+// converted to avr environment by Zulkar Nayem, 2ra Technology Ltd.
+
 // microcontroller : atmega64
 // default pins:
 // MOSI -> PB2
 // MISO -> PB3
 // SS -> PB0
 // DIO0 -> PE5 that is INT5, an interrupt pin
+// **********************************************************************************
 
 
 // must include spi.h library
@@ -53,40 +55,41 @@
 #define ISCn1                ISC51
 #define INT_VECT         INT5_vect
 
-#define RF69_MAX_DATA_LEN       61 // to take advantage of the built in AES/CRC we want to limit the frame size to the internal FIFO size (66 bytes - 3 bytes overhead - 2 bytes crc)
+#define RF69_MAX_DATA_LEN       61  // to take advantage of the built in AES/CRC we want to limit the frame size to the internal FIFO size (66 bytes - 3 bytes overhead - 2 bytes crc)
 #define CSMA_LIMIT              -90 // upper RX signal sensitivity threshold in dBm for carrier sense access
-#define RF69_MODE_SLEEP         0 // XTAL OFF
-#define RF69_MODE_STANDBY       1 // XTAL ON
-#define RF69_MODE_SYNTH         2 // PLL ON
-#define RF69_MODE_RX            3 // RX MODE
-#define RF69_MODE_TX            4 // TX MODE
+#define RF69_MODE_SLEEP         0   // XTAL OFF
+#define RF69_MODE_STANDBY       1   // XTAL ON
+#define RF69_MODE_SYNTH         2   // PLL ON
+#define RF69_MODE_RX            3   // RX MODE
+#define RF69_MODE_TX            4   // TX MODE
 #define null                  0
-#define COURSE_TEMP_COEF    -90 // puts the temperature reading in the ballpark, user can fine tune the returned value
+#define COURSE_TEMP_COEF    -90     // puts the temperature reading in the ballpark, user can fine tune the returned value
 #define RF69_BROADCAST_ADDR 255
 #define RF69_CSMA_LIMIT_MS 1000
 #define RF69_TX_LIMIT_MS   1000
-#define RF69_FSTEP  61.035156 // == FXOSC / 2^19 = 32MHz / 2^19 (p13 in datasheet) FXOSC = module crystal oscillator frequency 
+#define RF69_FSTEP  61.035156       // == FXOSC / 2^19 = 32MHz / 2^19 (p13 in datasheet) FXOSC = module crystal oscillator frequency 
 // TWS: define CTLbyte bits
 #define RFM69_CTL_SENDACK   0x80
 #define RFM69_CTL_REQACK    0x40
 
-volatile uint8_t DATA[RF69_MAX_DATA_LEN]; // recv/xmit buf, including header & crc bytes
+volatile uint8_t DATA[RF69_MAX_DATA_LEN];  // recv/xmit buf, including header & crc bytes
 volatile uint8_t DATALEN;
 volatile uint8_t SENDERID;
-volatile uint8_t TARGETID; // should match _address
+volatile uint8_t TARGETID;                 // should match _address
 volatile uint8_t PAYLOADLEN;
 volatile uint8_t ACK_REQUESTED;
-volatile uint8_t ACK_RECEIVED; // should be polled immediately after sending a packet with ACK request
-volatile int16_t RSSI; // most accurate RSSI during reception (closest to the reception)
+volatile uint8_t ACK_RECEIVED;             // should be polled immediately after sending a packet with ACK request
+volatile int16_t RSSI;                     // most accurate RSSI during reception (closest to the reception)
 volatile uint8_t mode = RF69_MODE_STANDBY; // should be protected?
-uint8_t isRFM69HW = 1; // if RFM69HW model matches high power enable possible
-uint8_t address; //nodeID
+uint8_t isRFM69HW = 1;                     // if RFM69HW model matches high power enable possible
+uint8_t address;                           //nodeID
 uint8_t powerLevel = 31;
 uint8_t promiscuousMode = 0;
 unsigned long millis_current;
 volatile uint8_t inISR = 0; 
     
-
+// Functions
+// *********************************************************************************************************************
 void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID=33);
 void setAddress(uint8_t addr);
 void setNetwork(uint8_t networkID);
@@ -102,11 +105,11 @@ uint32_t getFrequency();
 void setFrequency(uint32_t freqHz);
 void encrypt(const char* key);
 int16_t readRSSI(uint8_t forceTrigger=0);
-void setHighPower(uint8_t onOFF=1); // has to be called after initialize() for RFM69HW
-void setPowerLevel(uint8_t level); // reduce/increase transmit power level
+void setHighPower(uint8_t onOFF=1);           // has to be called after initialize() for RFM69HW
+void setPowerLevel(uint8_t level);            // reduce/increase transmit power level
 void sleep();
 uint8_t readTemperature(uint8_t calFactor=0); // get CMOS temperature (8bit)
-void rcCalibration(); // calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]
+void rcCalibration();                         // calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]
 uint8_t readReg(uint8_t addr);
 void writeReg(uint8_t addr, uint8_t val);
 void sendFrame(uint8_t toAddress, const void* buffer, uint8_t size, uint8_t requestACK=0, uint8_t sendACK=0);
@@ -117,6 +120,7 @@ void maybeInterrupts();
 void select();
 void unselect();
 uint8_t receiveDone();
+// *********************************************************************************************************************
 
 // freqBand must be selected from 315, 433, 868, 915
 void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
@@ -168,11 +172,11 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
 		{255, 0}
 	};
     
-	spi_init(); // spi init
-	//DDRC |= 1<<PC6; // temporary for testing. LED output
-	SS_DDR |= 1<<SS_PIN; // setting SS as output
-	SS_PORT |= 1<<SS_PIN; // setting slave select high
-	INT_DDR &= ~(1<<INT_PIN); // setting interrupt pin input. no problem if not given
+	spi_init();                // spi initialize
+	//DDRC |= 1<<PC6;          // temporary for testing LED output
+	SS_DDR |= 1<<SS_PIN;       // setting SS as output
+	SS_PORT |= 1<<SS_PIN;      // setting slave select high
+	INT_DDR &= ~(1<<INT_PIN);  // setting interrupt pin input. no problem if not given
 	INT_PORT &= ~(1<<INT_PIN); // setting pull down. because rising will cause interrupt. external pull down is needed.
 	
 	while (readReg(REG_SYNCVALUE1) != 0xaa)
@@ -192,18 +196,18 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
 	// Disable it during initialization so we always start from a known state.
 	encrypt(0);
 
-	setHighPower(isRFM69HW); // called regardless if it's a RFM69W or RFM69HW
+	setHighPower(isRFM69HW);        // called regardless if it's a RFM69W or RFM69HW
 	setMode(RF69_MODE_STANDBY);
 	while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00);
 	
 	EICRB |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
-	EIMSK |= 1<<INTn; // enable INTn
+	EIMSK |= 1<<INTn;               // enable INTn
     inISR = 0;
-	//sei(); //not needed because in millis_init() sei declared :)
-	millis_init(); // to get miliseconds
+	//sei();                        //not needed because in millis_init() sei declared :)
+	millis_init();                  // to get miliseconds
 
 	address = nodeID;
-	setAddress(address); // setting this node id
+	setAddress(address);            // setting this node id
 	setNetwork(networkID);
 }
 
@@ -521,8 +525,8 @@ void receiveBegin() {
 	setMode(RF69_MODE_RX);
 }
 
-// true  = disable filtering to capture all frames on network
-// false = enable node/broadcast filtering to capture only frames sent to this/broadcast address
+// 1  = disable filtering to capture all frames on network
+// 0 = enable node/broadcast filtering to capture only frames sent to this/broadcast address
 void promiscuous(uint8_t onOff) {
 	promiscuousMode = onOff;
 	if(promiscuousMode==0)
@@ -575,7 +579,7 @@ ISR(INT_VECT) {
 		ACK_RECEIVED = CTLbyte & RFM69_CTL_SENDACK; // extract ACK-received flag
 		ACK_REQUESTED = CTLbyte & RFM69_CTL_REQACK; // extract ACK-requested flag
 		
-		//interruptHook(CTLbyte);     // TWS: hook to derived class interrupt function
+		//interruptHook(CTLbyte);                   // TWS: hook to derived class interrupt function
 
 		for (uint8_t i = 0; i < DATALEN; i++)
 		{
