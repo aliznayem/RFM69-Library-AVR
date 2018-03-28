@@ -38,7 +38,7 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 
 </br>
 
-## Basic Operation Pseudocode: ##
+## Basic Operation: ##
 #### Transmit data: ####
 
 ```
