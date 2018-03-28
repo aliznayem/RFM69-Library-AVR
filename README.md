@@ -43,13 +43,9 @@ Original library was written in C++ for arduino. This version is for AVR environ
 1.	rfm69_init(freq, nodeID, networkID);
 2.	setHighPower(0 or 1);
 3.	setPowerLevel(0~31);
-4.	mainloop
-a.	send(toNodeID, buffer, bufferLen, 0 or 1 )
+4.	send(toNodeID, buffer, bufferLen, 0 or 1 )
 #### Receive data: #### 
 1.	rfm69_init(freq, nodeID, networkID);
 2.	setHighPower(0 or 1);
 3.	setPowerLevel(0~31);
-4.	mainloop
-a.	if(receiveDone())
-i.	if(ACKRequested()){sendACK()}
-ii.	process DATA buffer
+4.	mainloop >> if(receiveDone()) >> if(ACKRequested()){sendACK()} and process DATA buffer
