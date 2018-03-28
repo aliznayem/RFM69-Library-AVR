@@ -22,13 +22,13 @@ DIO0	->	any interrupt enabled pin
 2.	**setAddress(uint8_t addr):** Sets nodeID.
 3.	**setNetwork(uint8_t networkID):** Sets networkID.
 4.	**send(uint8_t toAddress, const void\* buffer, uint8_t bufferSize, uint8_t requestACK):** Transmits data to another node. First argument is toAddress that is address off receiver node/gateway. In buffer you can put any kind of buffer like string or array etc. In requestACK you can pass 0 or 1 whether you need acknowledgement of transmitted data.
-5.	**sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime):** This sends data with retry. Internally manages ACK. retryWaitTime – after transmitting data module waits for ack if doesn’t have ack then again transmits data. retryWaitTime is time interval between sending.
+5.	**sendWithRetry(uint8_t toAddress, const void\* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime):** This sends data with retry. Internally manages ACK. retryWaitTime – after transmitting data module waits for ack if doesn’t have ack then again transmits data. retryWaitTime is time interval between sending.
 6.	**ACKRequested():** This function needed in listening process. Checks whether acknowledgement requested or not.
-7.	**sendACK(const void* buffer , uint8_t bufferSize):** If ACK requested, send ACK through this function.
+7.	**sendACK(const void\* buffer , uint8_t bufferSize):** If ACK requested, send ACK through this function.
 8.	**receiveDone():**  Returns 1 if any data is present in receive buffer.
 9.	**getFrequency():** Gets frequency Band.
 10.	**setFrequency(uint32_t freqHz):** Sets frequency band. You can set frequency other than 315, 433, 868, 915 MHz through this function. Unit is Hz i.e 433000000. 
-11.	**encrypt(const char* key):** All device need same encryption key. And length must be 16. If you need no encryption just put 0 in argument. 
+11.	**encrypt(const char\* key):** All device need same encryption key. And length must be 16. If you need no encryption just put 0 in argument. 
 12.	**readRSSI(uint8_t forceTrigger=0):** You want to know received signal strength? :D
 13.	**setHighPower(uint8_t onOFF=1):** RFM69 has different suffixes like, W, HW or HCW etcetra. In our office we have RFM69HW. Having ‘H’ word indicated high power enabled. If you use module having ‘H’ letter put 1 as argument. This function must be called after initialize.
 14.	**setPowerLevel(uint8_t level):** Sets transmit power. Range 0~31.
