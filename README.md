@@ -13,6 +13,8 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 | SS | SS |
 | DIO0 | any interrupt enabled pin |
 
+</br>
+
 ## Library: ##
 
 #### Function Description: ####
@@ -34,6 +36,7 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 16.	**rcCalibration():** Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section 4.3.5. RC Timer Accuracy. Not tested yet.
 17.	**promiscuous(uint8_t onOff):** 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
 
+</br>
 
 ## Basic Operation Pseudocode: ##
 #### Transmit data: ####
