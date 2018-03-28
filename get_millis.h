@@ -1,4 +1,4 @@
-// I got code from https://gist.github.com/adnbr/2439125#file-counting-millis-c to create libray. -Zulkar Nayem
+// Source: https://gist.github.com/adnbr/2439125#file-counting-millis-c
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
