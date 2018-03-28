@@ -37,22 +37,25 @@ DIO0	->	any interrupt enabled pin
 17.	**promiscuous(uint8_t onOff):** 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
 
 
-## Basic Operation Flow: ##
-#### Transmit data: #### 
-'''
-rfm69_init(freq, nodeID, networkID);
-setHighPower(0 or 1);
-setPowerLevel(0~31);
+## Basic Operation Pseudocode: ##
+#### Transmit data: ####
+
+```
+rfm69_init(freq, nodeID, networkID)
+setHighPower(0 or 1)
+setPowerLevel(0~31)
 send(toNodeID, buffer, bufferLen, 0 or 1 )
-'''
+```
+
 #### Receive data: ####
-'''
-rfm69_init(freq, nodeID, networkID);
-setHighPower(0 or 1);
-setPowerLevel(0~31);
+
+```
+rfm69_init(freq, nodeID, networkID)
+setHighPower(0 or 1)
+setPowerLevel(0~31)
 mainloop
-  if(receiveDone())
-    if(ACKRequested())
-      sendACK()
-     extract received data from DATA buffer
-'''
+    if(receiveDone())
+        if(ACKRequested())
+            sendACK()
+        extract received data from DATA buffer
+```
