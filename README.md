@@ -28,13 +28,13 @@ DIO0	->	any interrupt enabled pin
 8.	**receiveDone():**  Returns 1 if any data is present in receive buffer.
 9.	**getFrequency():** Gets frequency Band.
 10.	**setFrequency(uint32_t freqHz):** Sets frequency band. You can set frequency other than 315, 433, 868, 915 MHz through this function. Unit is Hz i.e 433000000. 
-11.	encrypt(const char* key): All device need same encryption key. And length must be 16. If you need no encryption just put 0 in argument. 
-12.	readRSSI(uint8_t forceTrigger=0): You want to know received signal strength? :D
-13.	setHighPower(uint8_t onOFF=1): RFM69 has different suffixes like, W, HW or HCW etcetra. In our office we have RFM69HW. Having ‘H’ word indicated high power enabled. If you use module having ‘H’ letter put 1 as argument. This function must be called after initialize.
-14.	setPowerLevel(uint8_t level): Sets transmit power. Range 0~31.
-15.	readTemperature(uint8_t calFactor=0): gets CMOS temperature (8bit)
-16.	rcCalibration(): Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]. Not tested yet.
-17.	promiscuous(uint8_t onOff): 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
+11.	**encrypt(const char* key):** All device need same encryption key. And length must be 16. If you need no encryption just put 0 in argument. 
+12.	**readRSSI(uint8_t forceTrigger=0):** You want to know received signal strength? :D
+13.	**setHighPower(uint8_t onOFF=1):** RFM69 has different suffixes like, W, HW or HCW etcetra. In our office we have RFM69HW. Having ‘H’ word indicated high power enabled. If you use module having ‘H’ letter put 1 as argument. This function must be called after initialize.
+14.	**setPowerLevel(uint8_t level):** Sets transmit power. Range 0~31.
+15.	**readTemperature(uint8_t calFactor=0):** gets CMOS temperature (8bit)
+16.	**rcCalibration():** Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section 4.3.5. RC Timer Accuracy. Not tested yet.
+17.	**promiscuous(uint8_t onOff):** 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
 
 
 ## Basic Operation Flow: ##
