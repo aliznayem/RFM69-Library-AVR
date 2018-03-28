@@ -15,9 +15,8 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 
 </br>
 
-## Library: ##
+## Function Description: ##
 
-#### Function Description: ####
 1.	**rfm69_init(*uint16_t freqBand, uint8_t nodeID, uint8_t networkID*):** Initializes rfm69 module. This function is called at the beginning of the program. Initializes IDs, modes etc. It takes three parameters. First one freqBand. You have to choose among 315, 433, 868 and 915. These specifies frequency in MHz. nodeID is analogues to device ID. Each RF module will have unique nodeID. Value must be within 0 to 255. Then comes notworkID. Say, a system has 5 rf modules to communicate with each other. All the modules must be in same networkID . networkID value range 0~255.
 2.	**setAddress(*uint8_t addr*):** Sets nodeID.
 3.	**setNetwork(*uint8_t networkID*):** Sets networkID.
