@@ -1,5 +1,5 @@
 # RFM69-Library-AVR #
-Original library is written for arduino by https://github.com/LowPowerLab/RFM69. This library is C ported version for AVR.
+Original library is written for arduino by https://github.com/LowPowerLab/RFM69. This library is C ported version for AVR microcontrollers.
 
 ## I/O pin connections: ##
 
@@ -16,7 +16,7 @@ SS	->	SS
 DIO0	->	any interrupt enabled pin
 
 ## Library: ##
-Original library was written in C++ in arduino environment. I converted this library in AVR environment. 
+Original library was written in C++ for arduino. This version is for AVR environment. 
 #### Function Description: ####
 1.	rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID): Initializes rfm69 module. This function is called at the beginning of the program. Initializes IDs, modes etc. It takes three parameters. First one freqBand. You have to choose among 315, 433, 868 and 915. These specifies frequency in MHz. nodeID is analogues to device ID. Each RF module will have unique nodeID. Value must be within 0 to 255. Then comes notworkID. Say, a system has 5 rf modules to communicate with each other. All the modules must be in same networkID . networkID value range 0~255.
 2.	setAddress(uint8_t addr): Sets nodeID.
@@ -33,8 +33,8 @@ Original library was written in C++ in arduino environment. I converted this lib
 13.	setHighPower(uint8_t onOFF=1): RFM69 has different suffixes like, W, HW or HCW etcetra. In our office we have RFM69HW. Having ‘H’ word indicated high power enabled. If you use module having ‘H’ letter put 1 as argument. This function must be called after initialize.
 14.	setPowerLevel(uint8_t level): Sets transmit power. Range 0~31.
 15.	readTemperature(uint8_t calFactor=0): gets CMOS temperature (8bit)
-16.	rcCalibration(): Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]. I didn’t test it.
-17.	promiscuous(uint8_t onOff): 1 or 0. If on, module receives data indiscriminately. In another words, it receives all data in network. Not clear? Just google it. :D
+16.	rcCalibration(): Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section [4.3.5. RC Timer Accuracy]. Not tested yet.
+17.	promiscuous(uint8_t onOff): 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
 
 
 ## Basic Operation Flow: ##
