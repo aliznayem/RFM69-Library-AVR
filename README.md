@@ -3,17 +3,13 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 
 ## I/O pin connections: ##
 
-RF Module -- Microcontroller
-
-MOSI	->	MOSI
-
-MISO	->	MISO
-
-SCK	->	SCK
-
-SS	->	SS
-
-DIO0	->	any interrupt enabled pin
+| RF Module | Microcontroller |
+| --------- | --------------- |
+|MOSI |	MOSI |
+| MISO | MISO |
+| SCK | SCK |
+| SS | SS |
+| DIO0 | any interrupt enabled pin |
 
 ## Library: ##
 
