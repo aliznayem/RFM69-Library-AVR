@@ -4,6 +4,7 @@
  * Created: 4/17/2017 12:05:29 PM
  * Author : Zulkar Nayem
  */ 
+
 #define F_CPU 8000000
 
 #include <avr/io.h>
@@ -11,6 +12,7 @@
 #include <util/delay.h>
 
 #include "RFM69.h"
+#include "RFM69.c"
 #include "RFM69registers.h"
 
 #define NETWORKID 33
