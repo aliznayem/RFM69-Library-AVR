@@ -337,12 +337,11 @@ void setHighPowerRegs(uint8_t onOff)
 void setHighPower(uint8_t onOff) 
 {
 	isRFM69HW = onOff;
-	if(isRFM69HW==0)
-	    writeReg(REG_OCP, RF_OCP_OFF);
-	else if(isRFM69HW==1) // turning ON
-	    writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
-	else
-	    writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
+        writeReg(REG_OCP, isRFM69HW ? RF_OCP_OFF : RF_OCP_ON);
+        if(isRFM69HW == 1) // turning ON
+            writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
+        else
+            writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
 }
 
 // get the received signal strength indicator (RSSI)
