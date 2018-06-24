@@ -16,25 +16,25 @@ void millis_init()
     // into the output compare
     OCR1AH = (CTC_MATCH_OVERFLOW >> 8);
     OCR1AL = CTC_MATCH_OVERFLOW;
-	sei();
-	
+    sei();
+    
     // Enable the compare match interrupt
     TIMSK |= (1 << OCIE1A);
 }
 
 unsigned long millis()
 {
-	unsigned long millis_return;
-	// ensure this cannnot be disrupted
-	ATOMIC_BLOCK(ATOMIC_FORCEON)
-	{
-		millis_return = timer1_millis;
-	}
-	return millis_return;
+    unsigned long millis_return;
+    // ensure this cannnot be disrupted
+    ATOMIC_BLOCK(ATOMIC_FORCEON)
+    {
+        millis_return = timer1_millis;
+    }
+    return millis_return;
 }
 
 ISR (TIMER1_COMPA_vect)
 {
-	timer1_millis++;
+    timer1_millis++;
 }
 
