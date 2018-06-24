@@ -139,7 +139,7 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
     EICRB |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
     EIMSK |= 1<<INTn;               // enable INTn
     inISR = 0;
-    //sei();                        //not needed because in millis_init() sei declared :)
+    //sei();                        //not needed because sei() called in millis_init() :)
     millis_init();                  // to get miliseconds
 
     address = nodeID;
@@ -147,13 +147,13 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
     setNetwork(networkID);
 }
 
-//set this node's address
+// set this node's address
 void setAddress(uint8_t addr)
 {
     writeReg(REG_NODEADRS, addr);
 }
 
-//set network address
+// set network address
 void setNetwork(uint8_t networkID)
 {
     writeReg(REG_SYNCVALUE2, networkID);
@@ -169,6 +169,7 @@ uint8_t canSend()
     return 0;
 }
 
+// Transmit data
 void send(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t requestACK)
 {
     writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFB) | RF_PACKET2_RXRESTART); // avoid RX deadlocks
@@ -204,7 +205,6 @@ void sendACK(const void* buffer, uint8_t bufferSize)
 // this function implements 2 modes as follows:
 //       - for RFM69W the range is from 0-31 [-18dBm to 13dBm] (PA0 only on RFIO pin)
 //       - for RFM69HW the range is from 0-31 [5dBm to 20dBm]  (PA1 & PA2 on PA_BOOST pin & high Power PA settings - see section 3.3.7 in datasheet, p22)
-
 void setPowerLevel(uint8_t powerLevel)
 {
     uint8_t _powerLevel = powerLevel;
@@ -249,6 +249,7 @@ void setFrequency(uint32_t freqHz)
     setMode(oldMode);
 }
 
+// Read byte from register
 uint8_t readReg(uint8_t addr)
 {
     select();
@@ -258,6 +259,7 @@ uint8_t readReg(uint8_t addr)
     return regval;
 }
 
+// Write byte to register
 void writeReg(uint8_t addr, uint8_t value)
 {
     select();
@@ -336,11 +338,12 @@ void setHighPowerRegs(uint8_t onOff)
 void setHighPower(uint8_t onOff) 
 {
     isRFM69HW = onOff;
-        writeReg(REG_OCP, isRFM69HW ? RF_OCP_OFF : RF_OCP_ON);
-        if(isRFM69HW == 1) // turning ON
-            writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
-        else
-            writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
+    writeReg(REG_OCP, isRFM69HW ? RF_OCP_OFF : RF_OCP_ON);
+
+    if (isRFM69HW == 1) // turning ON
+        writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
+    else
+        writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
 }
 
 // get the received signal strength indicator (RSSI)
@@ -399,13 +402,15 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_
     setMode(RF69_MODE_STANDBY);
 }
 
+// Calibrate RC
 void rcCalibration()
 {
     writeReg(REG_OSC1, RF_OSC1_RCCAL_START);
     while ((readReg(REG_OSC1) & RF_OSC1_RCCAL_DONE) == 0x00);
 }
 
-uint8_t sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime) {
+uint8_t sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_t retries, uint8_t retryWaitTime)
+{
     for (uint8_t i = 0; i <= retries; i++)
     {
         send(toAddress, buffer, bufferSize, 1);
@@ -422,15 +427,18 @@ uint8_t sendWithRetry(uint8_t toAddress, const void* buffer, uint8_t bufferSize,
 }
 
 // should be polled immediately after sending a packet with ACK request
-uint8_t ACKReceived(uint8_t fromNodeID) {
+uint8_t ACKReceived(uint8_t fromNodeID)
+{
     if (receiveDone())
         return (SENDERID == fromNodeID || fromNodeID == RF69_BROADCAST_ADDR) && ACK_RECEIVED;
     return 0;
 }
 
 // checks if a packet was received and/or puts transceiver in receive (ie RX or listen) mode
-uint8_t receiveDone() {
+uint8_t receiveDone()
+{
     cli();
+
     if (mode == RF69_MODE_RX && PAYLOADLEN > 0)
     {
         setMode(RF69_MODE_STANDBY); // enables interrupts
@@ -446,7 +454,8 @@ uint8_t receiveDone() {
 }
 
 // internal function
-void receiveBegin() {
+void receiveBegin()
+{
     DATALEN = 0;
     SENDERID = 0;
     TARGETID = 0;
@@ -462,7 +471,8 @@ void receiveBegin() {
 
 // 1  = disable filtering to capture all frames on network
 // 0 = enable node/broadcast filtering to capture only frames sent to this/broadcast address
-void promiscuous(uint8_t onOff) {
+void promiscuous(uint8_t onOff)
+{
     promiscuousMode = onOff;
     if(promiscuousMode==0)
         writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_NODEBROADCAST);
@@ -470,25 +480,29 @@ void promiscuous(uint8_t onOff) {
         writeReg(REG_PACKETCONFIG1, (readReg(REG_PACKETCONFIG1) & 0xF9) | RF_PACKET1_ADRSFILTERING_OFF);    
 }
 
+// Only reenable interrupts if we're not being called from the ISR
 void maybeInterrupts()
 {
-    // Only reenable interrupts if we're not being called from the ISR
     if (!inISR) sei();
 }
 
+// Enable SPI transfer
 void select()
 {
     SS_PORT &= ~(1<<SS_PIN);
     cli();
 }
 
+// Disable SPI transfer
 void unselect()
 {
     SS_PORT |= 1<<SS_PIN;
     maybeInterrupts();
 }
 
-ISR(INT_VECT) {
+// Interrupt Service Routine
+ISR(INT_VECT)
+{
     inISR = 1;
     if (mode == RF69_MODE_RX && (readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PAYLOADREADY))
     {
