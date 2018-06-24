@@ -33,7 +33,7 @@ Original library is written for arduino by [LowPowerLab](https://github.com/LowP
 14.	**setPowerLevel(*uint8_t level*):** Sets transmit power. Range 0~31.
 15.	**readTemperature(*uint8_t calFactor=0*):** gets CMOS temperature (8bit)
 16.	**rcCalibration():** Calibrate the internal RC oscillator for use in wide temperature variations - see datasheet section 4.3.5. RC Timer Accuracy. Not tested yet.
-17.	**promiscuous(*uint8_t onOff*):** 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network.
+17.	**promiscuous(*uint8_t onOff*):** 1 or 0. If on, module receives data indiscriminately. In another word, it receives all data in network when set to 1.
 
 </br>
 
