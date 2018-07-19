@@ -42,7 +42,6 @@
 #include "RFM69.h"
 #include "get_millis.c"
 
-volatile uint8_t DATA[RF69_MAX_DATA_LEN];  // recv/xmit buf, including header & crc bytes
 volatile uint8_t DATALEN;
 volatile uint8_t SENDERID;
 volatile uint8_t TARGETID;                 // should match _address
