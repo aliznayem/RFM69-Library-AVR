@@ -41,17 +41,34 @@
 #define RFM69_h
 
 // Definitions
-#define SS_DDR                DDRB
-#define SS_PORT              PORTB
-#define SS_PIN                 PB0
+#if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__)
+    #define SS_DDR                DDRB
+    #define SS_PORT              PORTB
+    #define SS_PIN                 PB2
 
-#define INT_DDR               DDRE
-#define INT_PORT             PORTE
-#define INT_PIN                PE5
-#define INTn                  INT5
-#define ISCn0                ISC50
-#define ISCn1                ISC51
-#define INT_VECT         INT5_vect
+    #define INT_DDR               DDRD
+    #define INT_PORT             PORTD
+    #define INT_PIN                PD2
+    #define INTn                  INT0
+    #define ISCn0                ISC00
+    #define ISCn1                ISC01
+    #define INT_VECT         INT0_vect
+
+#elif defined (__AVR_ATmega64__)
+    #define SS_DDR                DDRB
+    #define SS_PORT              PORTB
+    #define SS_PIN                 PB0
+
+    #define INT_DDR               DDRE
+    #define INT_PORT             PORTE
+    #define INT_PIN                PE5
+    #define INTn                  INT5
+    #define ISCn0                ISC50
+    #define ISCn1                ISC51
+    #define INT_VECT         INT5_vect
+#endif
+
+
 
 #define RF69_MAX_DATA_LEN       61  // to take advantage of the built in AES/CRC we want to limit the frame size to the internal FIFO size (66 bytes - 3 bytes overhead - 2 bytes crc)
 #define CSMA_LIMIT             -90 // upper RX signal sensitivity threshold in dBm for carrier sense access
