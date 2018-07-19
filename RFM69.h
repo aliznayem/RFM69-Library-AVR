@@ -48,6 +48,8 @@
 
 #   define INT_DDR               DDRD
 #   define INT_PORT             PORTD
+#   define INT_PIN               PIND
+#   define INT_pin_num              2
 #   define INT_PIN_n              PD2
 #   define INTn                  INT0
 #   define ISCn0                ISC00
@@ -63,6 +65,8 @@
 
 #   define INT_DDR               DDRE
 #   define INT_PORT             PORTE
+#   define INT_PIN               PINE
+#   define INT_pin_num              5
 #   define INT_PIN_n              PE5
 #   define INTn                  INT5
 #   define ISCn0                ISC50
