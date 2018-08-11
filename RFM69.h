@@ -36,6 +36,7 @@
 // DIO0 -> PE5 that is INT5, an interrupt enabled pin
 // **********************************************************************************
 
+#include <avr/io.h>
 
 #ifndef RFM69_h
 #define RFM69_h

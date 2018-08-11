@@ -36,6 +36,8 @@
 // DIO0 -> PE5 that is INT5, an interrupt enabled pin
 // **********************************************************************************
 
+
+#include <avr/io.h>
 #include <avr/interrupt.h>
 #include "spi.h"
 #include "RFM69registers.h"
@@ -447,6 +449,7 @@ uint8_t receiveDone()
         return 0;
     }
     receiveBegin();
+    sei();
     return 0;
 }
 
