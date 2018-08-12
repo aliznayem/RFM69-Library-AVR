@@ -19,7 +19,11 @@ void millis_init()
     sei();
     
     // Enable the compare match interrupt
-    TIMSK1 |= (1 << OCIE1A);
+    #if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__)
+        TIMSK1 |= (1 << OCIE1A);
+    #elif defined (__AVR_ATmega64__)
+        TIMSK |= (1 << OCIE1A);
+    #endif
 }
 
 unsigned long millis()
