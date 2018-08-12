@@ -24,6 +24,7 @@
     $Id$
 */
 
+#include <avr/io.h>
 #include "spi.h"
 
 void spi_init()

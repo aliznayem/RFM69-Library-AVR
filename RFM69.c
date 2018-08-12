@@ -36,13 +36,14 @@
 // DIO0 -> PE5 that is INT5, an interrupt enabled pin
 // **********************************************************************************
 
+
+#include <avr/io.h>
 #include <avr/interrupt.h>
-#include "spi.c"
+#include "spi.h"
 #include "RFM69registers.h"
 #include "RFM69.h"
-#include "get_millis.c"
+#include "get_millis.h"
 
-volatile uint8_t DATA[RF69_MAX_DATA_LEN];  // recv/xmit buf, including header & crc bytes
 volatile uint8_t DATALEN;
 volatile uint8_t SENDERID;
 volatile uint8_t TARGETID;                 // should match _address
@@ -112,8 +113,8 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
     //DDRC |= 1<<PC6;          // temporary for testing LED output
     SS_DDR |= 1<<SS_PIN;       // setting SS as output
     SS_PORT |= 1<<SS_PIN;      // setting slave select high
-    INT_DDR &= ~(1<<INT_PIN);  // setting interrupt pin input. no problem if not given
-    INT_PORT &= ~(1<<INT_PIN); // setting pull down. because rising will cause interrupt. external pull down is needed.
+    INT_DDR &= ~(1<<INT_PIN_n);  // setting interrupt pin input. no problem if not given
+    INT_PORT &= ~(1<<INT_PIN_n); // setting pull down. because rising will cause interrupt. external pull down is needed.
     
     while (readReg(REG_SYNCVALUE1) != 0xaa)
     {
@@ -136,7 +137,7 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
     setMode(RF69_MODE_STANDBY);
     while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00);
     
-    EICRB |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
+    EICRn |= (1<<ISCn1)|(1<<ISCn0); // setting INTn rising. details datasheet p91. must change with interrupt pin.
     EIMSK |= 1<<INTn;               // enable INTn
     inISR = 0;
     //sei();                        //not needed because sei() called in millis_init() :)
@@ -161,7 +162,7 @@ void setNetwork(uint8_t networkID)
 
 uint8_t canSend()
 {
-    if (mode == RF69_MODE_RX && PAYLOADLEN == 0 && readRSSI() < CSMA_LIMIT) // if signal stronger than -100dBm is detected assume channel activity
+    if (mode == RF69_MODE_RX && PAYLOADLEN == 0 && readRSSI(0) < CSMA_LIMIT) // if signal stronger than -100dBm is detected assume channel activity
     {
         setMode(RF69_MODE_STANDBY);
         return 1;
@@ -338,12 +339,12 @@ void setHighPowerRegs(uint8_t onOff)
 void setHighPower(uint8_t onOff) 
 {
     isRFM69HW = onOff;
-    writeReg(REG_OCP, isRFM69HW ? RF_OCP_OFF : RF_OCP_ON);
+    writeReg(REG_OCP, isRFM69HW ? RF_OCP_OFF : RF_OCP_ON);
 
     if (isRFM69HW == 1) // turning ON
-        writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
+        writeReg(REG_PALEVEL, (readReg(REG_PALEVEL) & 0x1F) | RF_PALEVEL_PA1_ON | RF_PALEVEL_PA2_ON); // enable P1 & P2 amplifier stages
     else
-        writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
+        writeReg(REG_PALEVEL, RF_PALEVEL_PA0_ON | RF_PALEVEL_PA1_OFF | RF_PALEVEL_PA2_OFF | powerLevel); // enable P0 only
 }
 
 // get the received signal strength indicator (RSSI)
@@ -396,9 +397,7 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_
     //_delay_ms(500);
     // wait for DIO to high
     // for PINE5
-    //PORTC |= 1<<PC6;
-    while (bit_is_clear(PINE, 5) && millis() - millis_current < RF69_TX_LIMIT_MS); // must change with interrupt pin change
-    //PORTC &= ~(1<<PC6); //temporary for testing
+    while (bit_is_clear(INT_PIN, INT_pin_num) && millis() - millis_current < RF69_TX_LIMIT_MS); // must change with interrupt pin change
     setMode(RF69_MODE_STANDBY);
 }
 
@@ -450,6 +449,7 @@ uint8_t receiveDone()
         return 0;
     }
     receiveBegin();
+    sei();
     return 0;
 }
 
@@ -538,6 +538,6 @@ ISR(INT_VECT)
         unselect();
         setMode(RF69_MODE_RX);
     }
-    RSSI = readRSSI();
+    RSSI = readRSSI(0);
     inISR = 0;
 }

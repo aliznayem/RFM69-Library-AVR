@@ -19,7 +19,7 @@ void millis_init()
     sei();
     
     // Enable the compare match interrupt
-    TIMSK |= (1 << OCIE1A);
+    TIMSK1 |= (1 << OCIE1A);
 }
 
 unsigned long millis()
@@ -37,4 +37,3 @@ ISR (TIMER1_COMPA_vect)
 {
     timer1_millis++;
 }
-
