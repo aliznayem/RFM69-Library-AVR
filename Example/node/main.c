@@ -1,5 +1,4 @@
 /*
- * node.cpp
  *
  * Created: 4/17/2017 12:05:29 PM
  * Author : Zulkar Nayem
