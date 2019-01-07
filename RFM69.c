@@ -283,8 +283,7 @@ void encrypt(const char* key)
             spi_fast_shift(key[i]);
         unselect();
     }
-    else
-        writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | 0x00);    
+    writeReg(REG_PACKETCONFIG2, (readReg(REG_PACKETCONFIG2) & 0xFE) | (key ? 1:0));
 }
 
 void setMode(uint8_t newMode)
