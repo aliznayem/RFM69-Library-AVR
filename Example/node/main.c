@@ -21,16 +21,15 @@
 
 int main(void)
 {
-	// initialize RFM69
-	rfm69_init(433,NODEID,NETWORKID);
-	setHighPower(1); // if model number rfm69hw
-	setPowerLevel(30); // 0-31; 5dBm to 20 dBm
-	encrypt(NULL); // if set it has to be 16 bytes. example: "1234567890123456"
-	
+    // initialize RFM69
+    rfm69_init(433,NODEID,NETWORKID);
+    setHighPower(1); // if model number rfm69hw
+    setPowerLevel(30); // 0-31; 5dBm to 20 dBm
+    encrypt(NULL); // if set it has to be 16 bytes. example: "1234567890123456"
+
     while (1) 
     {
-		send(TONODEID,"Awesome!",8,0); // (toNodeId,buffer,bufferSize,requestACK?)
-		_delay_ms(2000);
+        send(TONODEID, "Awesome!", 8, 0); // (toNodeId,buffer,bufferSize,requestACK?)
+        _delay_ms(2000);
     }
 }
-
