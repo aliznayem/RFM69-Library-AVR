@@ -22,32 +22,31 @@
 
 int main(void)
 {
-	// initialize RFM69
-	rfm69_init(433, NODEID,NETWORKID);
-	setHighPower(1);   // if model number rfm69hw
-	setPowerLevel(30); // 0-31; 5dBm to 20 dBm 
-	encrypt(NULL);     // if set has to be 16 bytes. example: "1234567890123456"
-	
-	// initialize 16x2 LCD
-	lcd_init();
-	lcd_clrscr();
-	  
+    // initialize RFM69
+    rfm69_init(433, NODEID,NETWORKID);
+    setHighPower(1);   // if model number rfm69hw
+    setPowerLevel(30); // 0-31; 5dBm to 20 dBm 
+    encrypt(NULL);     // if set has to be 16 bytes. example: "1234567890123456"
+
+    // initialize 16x2 LCD
+    lcd_init();
+    lcd_clrscr();
+  
     while (1) 
     {
-		if(receiveDone())
-		{
-			_delay_ms(10);
-			if(ACKRequested())
-				sendACK();
-			char stringData[16];
-			for(uint8_t i=0;i<16;i++) // max 16 digit can be shown in this case
-			{
-				stringData[i]=DATA[i];
-			}
-			lcd_clrscr();
-			lcd_puts(stringData);
-			
-		}
+	if(receiveDone())
+        {
+            _delay_ms(10);
+            if(ACKRequested())
+		char ack[0];
+                sendACK(ack, 0);
+            char stringData[16];
+            for(uint8_t i=0;i<16;i++) // max 16 digit can be shown in this case
+            {
+                stringData[i]=DATA[i];
+            }
+            lcd_clrscr();
+            lcd_puts(stringData);
+        }
     }
 }
-
