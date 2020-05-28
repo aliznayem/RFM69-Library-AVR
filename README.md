@@ -1,6 +1,8 @@
 # RFM69-Library-AVR #
 Original library is written for arduino by [LowPowerLab](https://github.com/LowPowerLab/RFM69). This is C ported version for AVR microcontrollers.
 
+Tested on ATmega64, ATmega328, ATtiny84.
+
 </br>
 
 ## I/O pin connections: ##
