@@ -366,7 +366,7 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_
 {
     setMode(RF69_MODE_STANDBY); // turn off receiver to prevent reception while filling fifo
     while ((readReg(REG_IRQFLAGS1) & RF_IRQFLAGS1_MODEREADY) == 0x00); // wait for ModeReady
-    writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_00); // DIO0 is "Packet Sent"
+    //writeReg(REG_DIOMAPPING1, RF_DIOMAPPING1_DIO0_00); // DIO0 is "Packet Sent"
     if (bufferSize > RF69_MAX_DATA_LEN)
         bufferSize = RF69_MAX_DATA_LEN;
 
@@ -376,6 +376,9 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_
         CTLbyte = RFM69_CTL_SENDACK;
     else if (requestACK==1)
         CTLbyte = RFM69_CTL_REQACK;
+	
+	if (toAddress > 0xFF) CTLbyte |= (toAddress & 0x300) >> 6; //assign last 2 bits of address if > 255
+    if (address > 0xFF) CTLbyte |= (address & 0x300) >> 8;   //assign last 2 bits of address if > 255
 
     // write to FIFO
     select(); //enable data transfer
@@ -392,12 +395,13 @@ void sendFrame(uint8_t toAddress, const void* buffer, uint8_t bufferSize, uint8_
 
     // no need to wait for transmit mode to be ready since its handled by the radio
     setMode(RF69_MODE_TX);
-    millis_current = millis();
+    //millis_current = millis();
     //_delay_ms(500);
     // wait for DIO to high
     // for PINE5
-    while (bit_is_clear(INT_PIN, INT_pin_num) && millis() - millis_current < RF69_TX_LIMIT_MS); // must change with interrupt pin change
-    setMode(RF69_MODE_STANDBY);
+    //while (bit_is_clear(INT_PIN, INT_pin_num) && millis() - millis_current < RF69_TX_LIMIT_MS);
+	while ((readReg(REG_IRQFLAGS2) & RF_IRQFLAGS2_PACKETSENT) == 0x00); // wait for PacketSent
+	setMode(RF69_MODE_STANDBY);
 }
 
 // Calibrate RC
