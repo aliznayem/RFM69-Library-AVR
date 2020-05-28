@@ -23,6 +23,8 @@ void millis_init()
         TIMSK1 |= (1 << OCIE1A);
     #elif defined (__AVR_ATmega64__)
         TIMSK |= (1 << OCIE1A);
+	#elif defined (__AVR_ATtiny84A__)
+        TIMSK1 |= (1 << OCIE1A);
     #endif
 }
 
