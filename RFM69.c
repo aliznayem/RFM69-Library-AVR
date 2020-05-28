@@ -26,14 +26,7 @@
 
 
 // **********************************************************************************
-// converted to avr environment by Zulkar Nayem
-
-// microcontroller : atmega64
-// default pins:
-// MOSI -> PB2
-// MISO -> PB3
-// SS -> PB0
-// DIO0 -> PE5 that is INT5, an interrupt enabled pin
+// Converted to AVR environment by Zulkar Nayem
 // **********************************************************************************
 
 
