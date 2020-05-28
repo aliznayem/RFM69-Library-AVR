@@ -66,8 +66,8 @@ void rfm69_init(uint16_t freqBand, uint8_t nodeID, uint8_t networkID)
     {
         /* 0x01 */ { REG_OPMODE, RF_OPMODE_SEQUENCER_ON | RF_OPMODE_LISTEN_OFF | RF_OPMODE_STANDBY },
         /* 0x02 */ { REG_DATAMODUL, RF_DATAMODUL_DATAMODE_PACKET | RF_DATAMODUL_MODULATIONTYPE_FSK | RF_DATAMODUL_MODULATIONSHAPING_00 }, // no shaping
-        /* 0x03 */ { REG_BITRATEMSB, RF_BITRATEMSB_9600}, // default: 4.8 KBPS
-        /* 0x04 */ { REG_BITRATELSB, RF_BITRATELSB_9600},
+        /* 0x03 */ { REG_BITRATEMSB, RF_BITRATEMSB_55555}, // default: 4.8 KBPS
+        /* 0x04 */ { REG_BITRATELSB, RF_BITRATELSB_55555},
         /* 0x05 */ { REG_FDEVMSB, RF_FDEVMSB_50000}, // default: 5KHz, (FDEV + BitRate / 2 <= 500KHz)
         /* 0x06 */ { REG_FDEVLSB, RF_FDEVLSB_50000},
 
