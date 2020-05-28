@@ -27,7 +27,6 @@
 #ifndef SPI_h
 #define SPI_h
 
-
 #if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__)
     #define SPI_DDR   DDRB
     #define MISO         4
@@ -41,6 +40,13 @@
     #define MOSI         2
     #define SCK          1
     #define SS           0
+
+#elif defined(__AVR_ATtiny84A__)
+    #define SPI_DDR   DDRA
+    #define MISO         5
+    #define MOSI         6
+    #define SCK          4
+    #define SS           3
 #endif
 
 void spi_init();
