@@ -13,7 +13,7 @@ Tested on ATmega64, ATmega328, ATtiny84.
 | MISO | MISO |
 | SCK | SCK |
 | SS | SS |
-| DIO0 | any interrupt enabled pin |
+| DIO0 | Any interrupt enabled pin |
 
 </br>
 
