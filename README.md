@@ -56,8 +56,8 @@ rfm69_init(freq, nodeID, networkID)
 setHighPower(0 or 1)
 setPowerLevel(0~31)
 mainloop
-    if receiveDone() is 1 then
-        if ACKRequested() is 1 then
+    if receiveDone() then
+        if ACKRequested() then
             sendACK()
         extract received data from DATA buffer
 ```
